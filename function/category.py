@@ -29,7 +29,7 @@ class Category:
 
 	def parse(self, path):
 		"""
-		Generate categories tree from the data dir
+		Generate categories tree
 		"""
 		items = []
 		_items = os.listdir(path)

@@ -2,6 +2,7 @@
 import sys
 import os
 from function.category import Category
+from function.post import Post
 
 try:
 	import settings
@@ -25,8 +26,14 @@ if not os.path.isdir(settings.OUT_DIR):
 		sys.exit(1)
 
 categories = Category()
+posts = Post()
 
 categories.parse(path=settings.DATA_DIR)
 if len(categories.get_all()) == 0:
 	print "ERROR: please create some categories before doing a parse"
+	sys.exit(1)
+
+posts.parse(path=settings.DATA_DIR)
+if len(posts.get_all()) == 0:
+	print "ERROR: please write some posts before doing a parse"
 	sys.exit(1)
