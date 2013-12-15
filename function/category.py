@@ -27,7 +27,7 @@ class Category:
 		"""
 		return self.flat_items
 
-	def parse(self, path):
+	def _parse(self, path):
 		"""
 		Generate categories tree
 		"""
@@ -43,10 +43,13 @@ class Category:
 					cat = {
 						'id': t[1],
 						'name': t[0],
-						'subcat': self.parse(npath)
+						'subcat': self._parse(path=npath)
 					}
 
 					items.append(cat)
 					self.flat_items[t[1]] = t[0]
 
-		self.items = items
+		return items
+
+	def parse(self, path):
+		self.items = self._parse(path=path)
