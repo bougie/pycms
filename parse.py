@@ -12,8 +12,8 @@ if len(settings.DATA_DIR) == 0 or len(settings.OUT_DIR) == 0:
 	print "ERROR: Please fill correctly the config file"
 	sys.exit(1)
 
-if not os.path.isdir(settings.DATA-DIR):
-	print "ERROR: Data dir %s does not exist" % (settings.DATA-DIR)
+if not os.path.isdir(settings.DATA_DIR):
+	print "ERROR: Data dir '%s' does not exist" % (settings.DATA_DIR)
 	sys.exit(1)
 
 if not os.path.isdir(settings.OUT_DIR):
