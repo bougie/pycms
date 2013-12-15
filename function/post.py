@@ -7,6 +7,9 @@ class Post:
 		self.posts = []
 
 	def get_all(self):
+		"""
+		Get all posts
+		"""
 		return self.posts
 
 	def _parse(self, path, dirname = '', items = []):
