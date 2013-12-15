@@ -1,6 +1,7 @@
 #-*- coding: utf8 -*-
 import sys
 import os
+from function.category import Category
 
 try:
 	import settings
@@ -22,3 +23,10 @@ if not os.path.isdir(settings.OUT_DIR):
 	except Exception, e:
 		print "ERROR: " + str(e)
 		sys.exit(1)
+
+categories = Category()
+
+categories.parse(path=settings.DATA_DIR)
+if len(categories.get_all()) == 0:
+	print "ERROR: please create some categories before doing a parse"
+	sys.exit(1)
