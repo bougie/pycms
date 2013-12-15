@@ -12,7 +12,7 @@ class Post:
 		"""
 		return self.posts
 
-	def _parse(self, path, dirname = '', items = []):
+	def _list(self, path, dirname = '', items = []):
 		"""
 		Generate posts tree
 		"""
@@ -20,7 +20,7 @@ class Post:
 		for item in _items:
 			npath = os.path.join(path, item)
 			if os.path.isdir(npath):
-				items = self._parse(path=npath, dirname=item, items=items)
+				items = self._list(path=npath, dirname=item, items=items)
 			else:
 				mdfile = os.path.join(path, item)
 				if fnmatch.fnmatch(mdfile, '*.md'):
@@ -35,5 +35,5 @@ class Post:
 
 		return items
 
-	def parse(self, path):
-		self.posts = self._parse(path=path)
+	def generate_list(self, path):
+		self.posts = self._list(path=path)

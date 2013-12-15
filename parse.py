@@ -28,12 +28,12 @@ if not os.path.isdir(settings.OUT_DIR):
 categories = Category()
 posts = Post()
 
-categories.parse(path=settings.DATA_DIR)
+categories.generate_tree(path=settings.DATA_DIR)
 if len(categories.get_all()) == 0:
 	print "ERROR: please create some categories before doing a parse"
 	sys.exit(1)
 
-posts.parse(path=settings.DATA_DIR)
+posts.generate_list(path=settings.DATA_DIR)
 if len(posts.get_all()) == 0:
 	print "ERROR: please write some posts before doing a parse"
 	sys.exit(1)
