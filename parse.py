@@ -8,7 +8,7 @@ except:
 	print "ERROR: No config file found"
 	sys.exit(1)
 
-if len(settings.DATA-DIR) == 0 or len(settings.OUT_DIR) == 0:
+if len(settings.DATA_DIR) == 0 or len(settings.OUT_DIR) == 0:
 	print "ERROR: Please fill correctly the config file"
 	sys.exit(1)
 
