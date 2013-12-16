@@ -1,6 +1,7 @@
 #-*- coding: utf8 -*-
 import os
 import fnmatch
+import re
 
 class Post:
 	def __init__(self):
@@ -37,3 +38,34 @@ class Post:
 
 	def generate_list(self, path):
 		self.posts = self._list(path=path)
+
+	def parse(self, path, category = None):
+		"""
+		Parse a post file
+		"""
+		if not os.path.exists(path):
+			raise Exception("Post file does not exist")
+
+		in_body = False
+		post = {
+			'category': category,
+			'title': '',
+			'content': ''
+		}
+
+		postfile = open(path, 'r')
+		for line in postfile:
+			#line = line.rstrip('\n\r').rstrip('\n')
+
+			if not in_body:
+				m = re.search('^title:(.*)', line)
+				if m:
+					post['title'] = m.group(1).strip()
+				else:
+					in_body = True
+			else:
+				post['content'] += line
+
+		postfile.close()
+
+		return post

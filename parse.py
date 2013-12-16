@@ -37,3 +37,12 @@ posts.generate_list(path=settings.DATA_DIR)
 if len(posts.get_all()) == 0:
 	print "ERROR: please write some posts before doing a parse"
 	sys.exit(1)
+
+posts_list = []
+for post in posts.get_all():
+	try:
+		p = posts.parse(path=post['file'], category=post['category'])
+	except:
+		p = None
+	if p:
+		posts_list.append(p)
