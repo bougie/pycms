@@ -3,15 +3,17 @@ import os
 import fnmatch
 import re
 
-class Post:
-	def __init__(self):
-		self.posts = []
+import settings
 
-	def get_all(self):
-		"""
-		Get all posts
-		"""
-		return self.posts
+class Post:
+	posts_list = []
+
+	def __init__(self, file=None, category=None):
+		self.category = category
+		self.file = file
+
+		self.title = ''
+		self.content = ''
 
 	def _list(self, path, dirname = '', items = []):
 		"""
@@ -28,16 +30,15 @@ class Post:
 					t = dirname.split('-')
 			
 					if len(t) > 1:
-						post = {
-							'category': t[1],
-							'file': mdfile
-						}
-						items.append(post)
+						items.append(Post(file=mdfile, category=t[1]))
 
 		return items
 
-	def generate_list(self, path):
-		self.posts = self._list(path=path)
+	def generate_list(self):
+		"""
+		Generate posts tree
+		"""
+		Post.posts_list = self._list(path=settings.DATA_DIR)
 
 	def parse(self, path, category = None):
 		"""

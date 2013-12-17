@@ -1,36 +1,28 @@
 #-*- coding: utf8 -*-
 import os
 
+import settings
+
 class Category:
-	def __init__(self):
-		self.items = []
-		self.flat_items = dict()
+	items_tree = []
+	items_list = dict()
+
+	def __init__(self, id=None, name=None, path=None, children=None):
+		self.id = id
+		self.name = name
+		self.path = path
+		self.children = children
 
 	def get(category_id):
 		"""
 		Get the category name by the category id
 		"""
 		try:
-			return self.flat_items[cid]
+			return Category.items_tree[cid]
 		except:
 			return None
 
-	def get_all(self):
-		"""
-		Return the categories tree
-		"""
-		return self.items
-
-	def list_items(self):
-		"""
-		Return the flat tree of categories
-		"""
-		return self.flat_items
-
-	def _tree(self, path):
-		"""
-		Generate categories tree
-		"""
+	def generate_subtree(self, path):
 		items = []
 		_items = os.listdir(path)
 
@@ -40,16 +32,19 @@ class Category:
 				t = item.split('-')
 
 				if len(t) > 1:
-					cat = {
-						'id': t[1],
-						'name': t[0],
-						'subcat': self._tree(path=npath)
-					}
+					cat = Category(
+						id=t[1],
+						name=t[0],
+						path=npath,
+						children=self.generate_subtree(path=npath))
 
 					items.append(cat)
-					self.flat_items[t[1]] = t[0]
+					Category.items_list[t[1]] = t[0]
 
 		return items
 
-	def generate_tree(self, path):
-		self.items = self._tree(path=path)
+	def generate_tree(self):
+		"""
+		Generate categories tree
+		"""
+		Category.iems_tree = self.generate_subtree(path=settings.DATA_DIR)

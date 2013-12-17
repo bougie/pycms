@@ -1,14 +1,15 @@
 #-*- coding: utf8 -*-
 import sys
 import os
-from function.category import Category
-from function.post import Post
 
 try:
 	import settings
 except:
 	print "ERROR: No config file found"
 	sys.exit(1)
+
+from function.category import Category
+from function.post import Post
 
 if len(settings.DATA_DIR) == 0 or len(settings.OUT_DIR) == 0:
 	print "ERROR: Please fill correctly the config file"
@@ -28,21 +29,22 @@ if not os.path.isdir(settings.OUT_DIR):
 categories = Category()
 posts = Post()
 
-categories.generate_tree(path=settings.DATA_DIR)
-if len(categories.get_all()) == 0:
+categories.generate_tree()
+if len(Category.items_list) == 0:
 	print "ERROR: please create some categories before doing a parse"
 	sys.exit(1)
 
-posts.generate_list(path=settings.DATA_DIR)
-if len(posts.get_all()) == 0:
+posts.generate_list()
+if len(Post.posts_list) == 0:
 	print "ERROR: please write some posts before doing a parse"
 	sys.exit(1)
 
-posts_list = []
+"""posts_list = []
 for post in posts.get_all():
 	try:
 		p = posts.parse(path=post['file'], category=post['category'])
 	except:
 		p = None
+
 	if p:
-		posts_list.append(p)
+		posts_list.append(p)"""
