@@ -8,8 +8,8 @@ except:
 	print "ERROR: No config file found"
 	sys.exit(1)
 
-from function.category import Category
-from function.post import Post
+from lib.category import Category
+from lib.post import Post
 
 if len(settings.DATA_DIR) == 0 or len(settings.OUT_DIR) == 0:
 	print "ERROR: Please fill correctly the config file"
