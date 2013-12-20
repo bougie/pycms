@@ -2,3 +2,4 @@
 
 DATA_DIR = "data"
 OUT_DIR = "out"
+THEME = "default"

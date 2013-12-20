@@ -13,12 +13,12 @@ class Category:
 		self.path = path
 		self.children = children
 
-	def get(category_id):
+	def get(self, category_id):
 		"""
 		Get the category name by the category id
 		"""
 		try:
-			return Category.items_tree[cid]
+			return Category.items_list[category_id]
 		except:
 			return None
 

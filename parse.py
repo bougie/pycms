@@ -10,6 +10,9 @@ except:
 
 from lib.category import Category
 from lib.post import Post
+from lib.function import save_file
+
+from jinja2 import Environment, FileSystemLoader
 
 if len(settings.DATA_DIR) == 0 or len(settings.OUT_DIR) == 0:
 	print "ERROR: Please fill correctly the config file"
@@ -39,12 +42,29 @@ if len(Post.posts_list) == 0:
 	print "ERROR: please write some posts before doing a parse"
 	sys.exit(1)
 
-"""posts_list = []
-for post in posts.get_all():
-	try:
-		p = posts.parse(path=post['file'], category=post['category'])
-	except:
-		p = None
+tplenv = Environment()
+tplenv.loader = FileSystemLoader('template/default')
 
-	if p:
-		posts_list.append(p)"""
+#
+# Home page (index.html) generation
+#
+index_posts_list = []
+for post in posts.posts_list:
+	try:
+		post.parse()
+	except:
+		continue
+
+	index_posts_list.append({
+		'category': categories.get(category_id=post.category),
+		'title': post.title,
+		'content': post.content
+	})
+
+args = {
+	'page_title': 'TAW - The Appartland Website',
+	'posts': index_posts_list
+}
+hometpl = tplenv.get_template(name='index.tpl')
+hometpl_content = hometpl.render(args)
+save_file(path=os.path.join(settings.OUT_DIR, 'index.html'), content=hometpl_content)

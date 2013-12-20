@@ -40,33 +40,29 @@ class Post:
 		"""
 		Post.posts_list = self._list(path=settings.DATA_DIR)
 
-	def parse(self, path, category = None):
+	def parse(self):
 		"""
 		Parse a post file
 		"""
-		if not os.path.exists(path):
+		if not os.path.exists(self.file):
 			raise Exception("Post file does not exist")
 
-		in_body = False
-		post = {
-			'category': category,
-			'title': '',
-			'content': ''
-		}
+		self.title = ''
+		self.content = ''
 
-		postfile = open(path, 'r')
+		in_body = False
+
+		postfile = open(self.file, 'r')
 		for line in postfile:
 			#line = line.rstrip('\n\r').rstrip('\n')
 
 			if not in_body:
 				m = re.search('^title:(.*)', line)
 				if m:
-					post['title'] = m.group(1).strip()
+					self.title = m.group(1).strip()
 				else:
 					in_body = True
 			else:
-				post['content'] += line
+				self.content += line
 
 		postfile.close()
-
-		return post
