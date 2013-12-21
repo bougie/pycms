@@ -37,6 +37,12 @@ if len(Category.items_list) == 0:
 	print "ERROR: please create some categories before doing a parse"
 	sys.exit(1)
 
+cats_list = []
+for cat_name in Category.items_list.values():
+	cats_list.append({
+		'name': cat_name
+	})
+
 posts.generate_list()
 if len(Post.posts_list) == 0:
 	print "ERROR: please write some posts before doing a parse"
@@ -63,6 +69,8 @@ for post in posts.posts_list:
 
 args = {
 	'page_title': 'TAW - The Appartland Website',
+	'page_name': 'Accueil - liste des billets',
+	'categories': cats_list,
 	'posts': index_posts_list
 }
 hometpl = tplenv.get_template(name='index.tpl')
