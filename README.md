@@ -10,7 +10,11 @@ PyCMS need jinja2 template library :
 # pip install jinja2
 ```
 
-And that's all ! Simply clone the pycms source repository into a location of your webserver directory tree.
+And that's all ! Simply clone the pycms source repository into a location of your webserver directory tree. Next:
+```
+# cp settings.sample.py settings.py
+# vi settings.py
+```
 
 ## How-to
 
