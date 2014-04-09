@@ -4,6 +4,7 @@ import fnmatch
 import re
 
 import settings
+from lib.function import save_file
 
 class PostsManager:
 	def __init__(self, file=None):
@@ -35,6 +36,15 @@ class Post:
 
 		self.title = ''
 		self.content = ''
+		self.url_title = ''
+
+		self.set_url_title()
+
+	def set_url_title(self):
+		"""
+		Set the post title shown in the URL
+		"""
+		self.url_title = os.path.splitext(os.path.basename(self.file))[0]
 
 	def parse(self):
 		"""
@@ -42,9 +52,6 @@ class Post:
 		"""
 		if not os.path.exists(self.file):
 			raise Exception("Post file does not exist")
-
-		self.title = ''
-		self.content = ''
 
 		in_body = False
 
@@ -62,3 +69,19 @@ class Post:
 				self.content += line
 
 		postfile.close()
+
+	def save(self, tplenv):
+		"""
+		Save post content into an HTML file
+		"""
+		args = {
+			'page_title': '',
+			'page_name': '',
+			'post': {
+				'title': self.title,
+				'content': self.content
+			}
+		}
+		tpl = tplenv.get_template(name='post.tpl')
+		tpl_content = tpl.render(args)
+		save_file(path=os.path.join(settings.OUT_DIR, '%s.html' % (self.url_title)), content=tpl_content)

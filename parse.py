@@ -46,13 +46,17 @@ for post in posts.posts_list:
 	try:
 		print "Reading %s" % (post.file)
 		post.parse()
+
+		print "Saving %s in %s" % (post.file, post.url_title)
+		post.save(tplenv=tplenv)
 	except Exception, e:
 		print "    %s" % (str(e))
 		continue
 
 	index_posts_list.append({
 		'title': post.title,
-		'content': post.content
+		'content': post.content,
+		'url': post.url_title
 	})
 
 args = {
