@@ -8,8 +8,7 @@ except:
 	print "ERROR: No config file found"
 	sys.exit(1)
 
-from lib.category import Category
-from lib.post import Post
+from lib.post import PostsManager
 from lib.function import save_file
 
 from jinja2 import Environment, FileSystemLoader
@@ -29,22 +28,10 @@ if not os.path.isdir(settings.OUT_DIR):
 		print "ERROR: " + str(e)
 		sys.exit(1)
 
-categories = Category()
-posts = Post()
-
-categories.generate_tree()
-if len(Category.items_list) == 0:
-	print "ERROR: please create some categories before doing a parse"
-	sys.exit(1)
-
-cats_list = []
-for cat_name in Category.items_list.values():
-	cats_list.append({
-		'name': cat_name
-	})
+posts = PostsManager()
 
 posts.generate_list()
-if len(Post.posts_list) == 0:
+if len(posts.posts_list) == 0:
 	print "ERROR: please write some posts before doing a parse"
 	sys.exit(1)
 
@@ -57,12 +44,13 @@ tplenv.loader = FileSystemLoader('template/default')
 index_posts_list = []
 for post in posts.posts_list:
 	try:
+		print "Reading %s" % (post.file)
 		post.parse()
-	except:
+	except Exception, e:
+		print "    %s" % (str(e))
 		continue
 
 	index_posts_list.append({
-		'category': categories.get(category_id=post.category),
 		'title': post.title,
 		'content': post.content
 	})
@@ -70,7 +58,6 @@ for post in posts.posts_list:
 args = {
 	'page_title': 'TAW - The Appartland Website',
 	'page_name': 'Accueil - liste des billets',
-	'categories': cats_list,
 	'posts': index_posts_list
 }
 hometpl = tplenv.get_template(name='index.tpl')

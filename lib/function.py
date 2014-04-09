@@ -2,7 +2,7 @@
 
 def save_file(path, content):
 	try:
-		fh = open(path, 'a+')
+		fh = open(path, 'w+')
 		fh.write(content)
 		fh.close()
 	except Exception, e:

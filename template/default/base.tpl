@@ -10,19 +10,10 @@
 		<h2>NOM</h2>
 		<div class="name">{{page_name}}</div>
 
-		<h2>DESCRIPTION</h2>
+		<h2>BILLETS</h2>
 		<div class="content">
 		{% block content %}
 		{% endblock %}
-		</div>
-
-		<div class="menu">
-			<h2>Categories</h2>
-			<ul>
-			{% for cat in categories %}
-				<li>{{cat.name}}</li>
-			{% endfor %}
-			</ul>
 		</div>
 	</body>
 </html>

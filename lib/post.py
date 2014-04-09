@@ -5,17 +5,11 @@ import re
 
 import settings
 
-class Post:
-	posts_list = []
+class PostsManager:
+	def __init__(self, file=None):
+		self.posts_list = []
 
-	def __init__(self, file=None, category=None):
-		self.category = category
-		self.file = file
-
-		self.title = ''
-		self.content = ''
-
-	def _list(self, path, dirname = '', items = []):
+	def _list(self, path, dirname = ''):
 		"""
 		Generate posts tree
 		"""
@@ -23,22 +17,24 @@ class Post:
 		for item in _items:
 			npath = os.path.join(path, item)
 			if os.path.isdir(npath):
-				items = self._list(path=npath, dirname=item, items=items)
+				self._list(path=npath, dirname=item)
 			else:
 				mdfile = os.path.join(path, item)
 				if fnmatch.fnmatch(mdfile, '*.md'):
-					t = dirname.split('-')
-			
-					if len(t) > 1:
-						items.append(Post(file=mdfile, category=t[1]))
-
-		return items
+					self.posts_list.append(Post(file=mdfile))
 
 	def generate_list(self):
 		"""
 		Generate posts tree
 		"""
-		Post.posts_list = self._list(path=settings.DATA_DIR)
+		self._list(path=settings.DATA_DIR)
+
+class Post:
+	def __init__(self, file):
+		self.file = file
+
+		self.title = ''
+		self.content = ''
 
 	def parse(self):
 		"""
