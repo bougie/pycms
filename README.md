@@ -18,9 +18,9 @@ And that's all ! Simply clone the pycms source repository into a location of you
 
 ## How-to
 
-PyCMS is pretty simple to using it.\\
-Write some blog post in the DATA_DIR. Filename have to have .md extension.\\
-After writing posts, lanch this command :
+PyCMS is pretty simple to using it.
+Write some blog post in the DATA_DIR. Filename have to have .md extension.
+After writing posts, lauch this command :
 ```
 # python parse.py
 ```
