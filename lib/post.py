@@ -75,8 +75,8 @@ class Post:
 		Save post content into an HTML file
 		"""
 		args = {
-			'page_title': '',
-			'page_name': '',
+			'page_title': settings.WEBSITE_TITLE,
+			'page_name': 'Billet - Lecture',
 			'post': {
 				'title': self.title,
 				'content': self.content

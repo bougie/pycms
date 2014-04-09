@@ -36,7 +36,7 @@ if len(posts.posts_list) == 0:
 	sys.exit(1)
 
 tplenv = Environment()
-tplenv.loader = FileSystemLoader('template/default')
+tplenv.loader = FileSystemLoader('template/%s' % (settings.WEBSITE_THEME))
 
 #
 # Home page (index.html) generation
@@ -60,7 +60,7 @@ for post in posts.posts_list:
 	})
 
 args = {
-	'page_title': 'TAW - The Appartland Website',
+	'page_title': settings.WEBSITE_TITLE,
 	'page_name': 'Accueil - liste des billets',
 	'posts': index_posts_list
 }
