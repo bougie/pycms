@@ -21,7 +21,7 @@ if not os.path.isdir(settings.DATA_DIR):
 	print "ERROR: Data dir '%s' does not exist" % (settings.DATA_DIR)
 	sys.exit(1)
 
-if not os.path.isdir(settings.WEBSITE_THEME):
+if not os.path.isdir('template/%s' % (settings.WEBSITE_THEME)):
 	print "ERROR: Theme '%s' does not exist" % (settings.WEBSITE_THEME)
 	sys.exit(1)
 
