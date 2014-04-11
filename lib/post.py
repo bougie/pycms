@@ -20,9 +20,9 @@ class PostsManager:
 			if os.path.isdir(npath):
 				self._list(path=npath, dirname=item)
 			else:
-				mdfile = os.path.join(path, item)
-				if fnmatch.fnmatch(mdfile, '*.md'):
-					self.posts_list.append(Post(file=mdfile))
+				bpfile = os.path.join(path, item)
+				if fnmatch.fnmatch(bpfile, '*.bp'):
+					self.posts_list.append(Post(file=bpfile))
 
 	def generate_list(self):
 		"""
