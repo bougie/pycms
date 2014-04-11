@@ -1,9 +1,11 @@
 {% extends 'base.tpl' %}
 
-{% block content %}
-<h2>{{post.title}}</h2>
+{% block name %}
+<h2>TITRE</h2>
+{{post.title}}
+{% endblock %}
 
-<div class="post_content">
-	{{post.content}}
-</div>
+{% block content %}
+<h2>DESCRIPTION</h2>
+{{post.content}}
 {% endblock %}

@@ -7,10 +7,11 @@
 	<body>
 		<h1>{{page_title}}</h1>
 
-		<h2>NOM</h2>
-		<div class="name">{{page_name}}</div>
+		<div class="name">
+		{% block name %}
+		{% endblock %}
+		</div>
 
-		<h2>BILLETS</h2>
 		<div class="content">
 		{% block content %}
 		{% endblock %}
