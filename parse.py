@@ -65,7 +65,23 @@ for post in posts.posts_list:
 		'date': datetime.fromtimestamp(post.date_ts)
 	})
 
-	index_posts_list = sorted(index_posts_list, key=lambda pst: pst['date'], reverse=True)
+	# sort by date DESC by default
+	sort = 'date'
+	sort_revers_order = True
+	usersort = settings.POSTS_SORT.split('-')
+	if len(usersort) == 2:
+		if usersort[0] in ['date', 'title']: #Allowed sort filter
+			sort = usersort[0]
+			if usersort[1] == 'ASC':
+				sort_revers_order = False
+			elif usersort == 'DESC':
+				sort_revers_order = True
+
+	index_posts_list = sorted(
+		index_posts_list,
+		key=lambda pst: pst[sort],
+		reverse=sort_revers_order
+	)
 
 args = {
 	'page_title': settings.WEBSITE_TITLE,
