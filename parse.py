@@ -1,6 +1,7 @@
 #-*- coding: utf8 -*-
 import sys
 import os
+from datetime import datetime
 
 try:
 	import settings
@@ -61,10 +62,10 @@ for post in posts.posts_list:
 		'title': post.title,
 		'content': post.content,
 		'url': post.url_title,
-		'ts': post.date_ts
+		'date': datetime.fromtimestamp(post.date_ts)
 	})
 
-	index_posts_list = sorted(index_posts_list, key=lambda pst: pst['ts'], reverse=True)
+	index_posts_list = sorted(index_posts_list, key=lambda pst: pst['date'], reverse=True)
 
 args = {
 	'page_title': settings.WEBSITE_TITLE,
