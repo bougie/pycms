@@ -1,6 +1,6 @@
 #-*- coding: utf8 -*-
 
-WEBSITE_NAME = ""
+WEBSITE_TITLE = ""
 WEBSITE_THEME = "default"
 
 DATA_DIR = "data"
