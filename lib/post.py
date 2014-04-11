@@ -37,6 +37,7 @@ class Post:
 		self.title = ''
 		self.content = ''
 		self.url_title = ''
+		self.date_ts = 0
 
 		self.set_url_title()
 
@@ -52,6 +53,8 @@ class Post:
 		"""
 		if not os.path.exists(self.file):
 			raise Exception("Post file does not exist")
+
+		self.date_ts = os.path.getmtime(self.file)
 
 		in_body = False
 

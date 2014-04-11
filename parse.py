@@ -60,8 +60,11 @@ for post in posts.posts_list:
 	index_posts_list.append({
 		'title': post.title,
 		'content': post.content,
-		'url': post.url_title
+		'url': post.url_title,
+		'ts': post.date_ts
 	})
+
+	index_posts_list = sorted(index_posts_list, key=lambda pst: pst['ts'], reverse=True)
 
 args = {
 	'page_title': settings.WEBSITE_TITLE,
