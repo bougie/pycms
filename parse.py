@@ -11,6 +11,7 @@ except:
 
 from lib.post import PostsManager
 from lib.function import save_file
+from lib.static import move_statics_files
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -40,8 +41,10 @@ if len(posts.posts_list) == 0:
 	print "ERROR: please write some posts before doing a parse"
 	sys.exit(1)
 
+theme_dir = 'template/%s' % (settings.WEBSITE_THEME)
+
 tplenv = Environment()
-tplenv.loader = FileSystemLoader('template/%s' % (settings.WEBSITE_THEME))
+tplenv.loader = FileSystemLoader(theme_dir)
 
 #
 # Home page (index.html) generation
@@ -91,3 +94,8 @@ args = {
 hometpl = tplenv.get_template(name='index.tpl')
 hometpl_content = hometpl.render(args)
 save_file(path=os.path.join(settings.OUT_DIR, 'index.html'), content=hometpl_content)
+
+move_statics_files(
+	static_dir = os.path.join(theme_dir, 'static'),
+	output_dir = os.path.join(settings.OUT_DIR, 'static')
+)
