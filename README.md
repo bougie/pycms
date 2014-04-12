@@ -18,6 +18,16 @@ $ cp settings.sample.py settings.py
 $ vi settings.py
 ```
 
+### Plugins
+
+If you want to use markdown in your post files, you need to install the mardown extension for python :
+
+```
+# pip install mardown
+```
+
+Then, if you want to use markdown in the most of your posts, the best solution is to set **PARSER** to **mdown** in the settings.py file.
+
 ## How-to
 
 PyCMS is pretty simple to using it.
@@ -34,8 +44,10 @@ This script will generate all html static file from your *.md posts.
 
 ```
 title: title of the post
+parser: mdown / plain / html
 
 the content of the post
 ```
 
-The blank line is not a typo. This line is mandatory !
+**The blank line is not a typo. This line is mandatory !**
+The header line **parser** is not required if you set PARSER configuration variable. But you con use a different parser for only one post, and in this case, you have to set this header.

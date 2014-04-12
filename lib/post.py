@@ -6,6 +6,8 @@ import re
 import settings
 from lib.function import save_file
 
+ALLOWED_PARSER = ['mdown', 'plain']
+
 class PostsManager:
 	def __init__(self, file=None):
 		self.posts_list = []
@@ -33,6 +35,7 @@ class PostsManager:
 class Post:
 	def __init__(self, file):
 		self.file = file
+		self.parser = settings.PARSER
 
 		self.title = ''
 		self.content = ''
@@ -63,13 +66,30 @@ class Post:
 			#line = line.rstrip('\n\r').rstrip('\n')
 
 			if not in_body:
-				m = re.search('^title:(.*)', line)
+				m = re.search('^(title|parser):(.*)', line)
 				if m:
-					self.title = m.group(1).strip()
-				else:
+					header = m.group(1).strip()
+					value = m.group(2).strip()
+					if header == 'title':
+						self.title = value
+					elif header == 'parser' and value in ALLOWED_PARSER:
+						self.parser = value
+				else: # A blank line in headers -> change to the post content
 					in_body = True
 			else:
 				self.content += line
+
+		if not self.parser == 'plain': # We need to parse the content
+			if self.parser == 'mdown':
+				try:
+					from markdown import markdown
+					self.content = markdown(self.content)
+				except ImportError, e:
+					print "ERROR: makdown library does not exist"
+				except Exception, e:
+					print "ERROR: %s" % (str(e))
+					# On error, do nothing, text will be displayed in plain format
+					pass
 
 		postfile.close()
 
