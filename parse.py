@@ -11,7 +11,7 @@ except:
 
 from lib.post import PostsManager
 from lib.function import save_file
-from lib.static import move_statics_files
+from lib.static import move_static_files
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -95,7 +95,7 @@ hometpl = tplenv.get_template(name='index.tpl')
 hometpl_content = hometpl.render(args)
 save_file(path=os.path.join(settings.OUT_DIR, 'index.html'), content=hometpl_content)
 
-move_statics_files(
+move_static_files(
 	static_dir = os.path.join(theme_dir, 'static'),
 	output_dir = os.path.join(settings.OUT_DIR, 'static')
 )

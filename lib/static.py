@@ -2,7 +2,7 @@
 import os
 import shutil
 
-def move_statics_files(static_dir, output_dir):
+def move_static_files(static_dir, output_dir):
 	if os.path.isdir(output_dir):
 		shutil.rmtree(output_dir)
 
