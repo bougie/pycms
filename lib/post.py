@@ -85,7 +85,7 @@ class Post:
 					from markdown import markdown
 					self.content = markdown(self.content)
 				except ImportError, e:
-					print "ERROR: makdown library does not exist"
+					print "ERROR: markdown library does not exist"
 				except Exception, e:
 					print "ERROR: %s" % (str(e))
 					# On error, do nothing, text will be displayed in plain format
