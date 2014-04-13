@@ -3,9 +3,11 @@
  	<head>
 		<title>{{page_title}}</title>
 		<meta charset="utf-8">
+
+		<link rel="stylesheet" href="static/css/style.css" />
 	</head>
 	<body>
-		<h1>{{page_title}}</h1>
+		<h1><a href="index.html">{{page_title}}</a></h1>
 
 		<div class="name">
 		{% block name %}
@@ -19,7 +21,9 @@
 
 		<div class="seealso">
 			<h2>A voir</h2>
-			{{links}}
+			<div class="seealso_content"
+				{{links}}
+			</div>
 		</div>
 	</body>
 </html>
