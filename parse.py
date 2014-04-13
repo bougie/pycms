@@ -47,7 +47,7 @@ tplenv = Environment()
 tplenv.loader = FileSystemLoader(theme_dir)
 
 #
-# Home page (index.html) generation
+# Site generation
 #
 index_posts_list = []
 for post in posts.posts_list:
@@ -68,24 +68,28 @@ for post in posts.posts_list:
 		'date': datetime.fromtimestamp(post.date_ts)
 	})
 
-	# sort by date DESC by default
-	sort = 'date'
-	sort_revers_order = True
-	usersort = settings.POSTS_SORT.split('-')
-	if len(usersort) == 2:
-		if usersort[0] in ['date', 'title']: #Allowed sort filter
-			sort = usersort[0]
-			if usersort[1] == 'ASC':
-				sort_revers_order = False
-			elif usersort == 'DESC':
-				sort_revers_order = True
+#
+# Sort posts list on the home page
+#
+sort = 'date' # sort by date by default
+sort_revers_order = True # sort in revers order by default
+usersort = settings.POSTS_SORT.split('-')
+if len(usersort) == 2:
+	if usersort[0] in ['date', 'title']: #Allowed sort filter
+		sort = usersort[0]
+		if usersort[1] == 'ASC':
+			sort_revers_order = False
+		elif usersort == 'DESC':
+			sort_revers_order = True
 
-	index_posts_list = sorted(
-		index_posts_list,
-		key=lambda pst: pst[sort],
-		reverse=sort_revers_order
-	)
+index_posts_list = sorted(
+	index_posts_list,
+	key=lambda pst: pst[sort],
+	reverse=sort_revers_order
+)
 
+#
+# generate and save the home page
 args = {
 	'page_title': settings.WEBSITE_TITLE,
 	'page_name': 'Accueil - liste des billets',
@@ -95,6 +99,9 @@ hometpl = tplenv.get_template(name='index.tpl')
 hometpl_content = hometpl.render(args)
 save_file(path=os.path.join(settings.OUT_DIR, 'index.html'), content=hometpl_content)
 
+#
+# Move static file (css, js, img, ...) from the template dir to the output dir
+#
 move_static_files(
 	static_dir = os.path.join(theme_dir, 'static'),
 	output_dir = os.path.join(settings.OUT_DIR, 'static')
