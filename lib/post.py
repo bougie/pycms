@@ -63,8 +63,6 @@ class Post:
 
 		postfile = open(self.file, 'r')
 		for line in postfile:
-			#line = line.rstrip('\n\r').rstrip('\n')
-
 			if not in_body:
 				m = re.search('^(title|parser):(.*)', line)
 				if m:
@@ -93,18 +91,18 @@ class Post:
 
 		postfile.close()
 
-	def save(self, tplenv):
+	def save(self, tplenv, extra_args={}):
 		"""
 		Save post content into an HTML file
 		"""
-		args = {
-			'page_title': settings.WEBSITE_TITLE,
+		_args = {
 			'page_name': 'Billet - Lecture',
 			'post': {
 				'title': self.title,
 				'content': self.content
 			}
 		}
+		args = dict(_args.items() + extra_args.items())
 		tpl = tplenv.get_template(name='post.tpl')
 		tpl_content = tpl.render(args)
 		save_file(path=os.path.join(settings.OUT_DIR, '%s.html' % (self.url_title)), content=tpl_content)

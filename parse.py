@@ -12,6 +12,7 @@ except:
 from lib.post import PostsManager
 from lib.function import save_file
 from lib.static import move_static_files
+from lib.link import Link
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -47,6 +48,17 @@ tplenv = Environment()
 tplenv.loader = FileSystemLoader(theme_dir)
 
 #
+# Generate links
+#
+links = Link()
+links.parse()
+
+common_args = {
+	'page_title': settings.WEBSITE_TITLE,
+	'links': links.get()
+}
+
+#
 # Posts generation
 #
 index_posts_list = []
@@ -56,7 +68,7 @@ for post in posts.posts_list:
 		post.parse()
 
 		print "Saving %s in %s" % (post.file, post.url_title)
-		post.save(tplenv=tplenv)
+		post.save(tplenv=tplenv, extra_args=common_args)
 	except Exception, e:
 		print "    %s" % (str(e))
 		continue
@@ -90,11 +102,13 @@ index_posts_list = sorted(
 
 #
 # generate and save the home page
-args = {
+#
+_args = {
 	'page_title': settings.WEBSITE_TITLE,
 	'page_name': 'Accueil - liste des billets',
 	'posts': index_posts_list
 }
+args = dict(_args.items() + common_args.items())
 hometpl = tplenv.get_template(name='index.tpl')
 hometpl_content = hometpl.render(args)
 save_file(path=os.path.join(settings.OUT_DIR, 'index.html'), content=hometpl_content)

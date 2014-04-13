@@ -16,5 +16,10 @@
 		{% block content %}
 		{% endblock %}
 		</div>
+
+		<div class="seealso">
+			<h2>A voir</h2>
+			{{links}}
+		</div>
 	</body>
 </html>
