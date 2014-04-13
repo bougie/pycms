@@ -47,7 +47,7 @@ tplenv = Environment()
 tplenv.loader = FileSystemLoader(theme_dir)
 
 #
-# Site generation
+# Posts generation
 #
 index_posts_list = []
 for post in posts.posts_list:
