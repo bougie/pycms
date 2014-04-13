@@ -51,3 +51,18 @@ the content of the post
 
 **The blank line is not a typo. This line is mandatory !**
 The header line **parser** is not required if you set PARSER configuration variable. But you con use a different parser for only one post, and in this case, you have to set this header.
+
+### Blog links menu
+
+You can add a menu with static links. All will be in the **<data_dir>/links.txt** file.
+The syntax is similary to blog post :
+
+```
+parser: mdown / plain / whatever
+
+link1
+link2
+linkN
+```
+
+Like blog post, the header line **parser** is not required.
