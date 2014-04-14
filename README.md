@@ -45,12 +45,14 @@ This script will generate all html static file from your *.md posts.
 ```
 title: title of the post
 parser: mdown / plain / html
+tags: tag1,tag2, tag3
 
 the content of the post
 ```
 
 **The blank line is not a typo. This line is mandatory !**
 The header line **parser** is not required if you set PARSER configuration variable. But you con use a different parser for only one post, and in this case, you have to set this header.
+The header line **tags** is not required too. It is used to better organized posts.
 
 ### Blog links menu
 
