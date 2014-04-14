@@ -30,11 +30,13 @@
 			</div
 		{% endif %}
 
-		<div class="seealso">
-			<h2>A VOIR</h2>
-			<div class="seealso_content"
-				{{links}}
+		{% if links %}
+			<div class="seealso">
+				<h2>A VOIR</h2>
+				<div class="seealso_content"
+					{{links}}
+				</div>
 			</div>
-		</div>
+		{% endif %}
 	</body>
 </html>
