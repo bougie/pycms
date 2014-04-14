@@ -13,6 +13,7 @@ from lib.post import PostsManager
 from lib.function import save_file
 from lib.static import move_static_files
 from lib.link import Link
+from lib.tag import TagManager
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -56,7 +57,8 @@ def main():
 
 	common_args = {
 		'page_title': settings.WEBSITE_TITLE,
-		'links': links.get()
+		'links': links.get(),
+		'tags': ''
 	}
 
 	#
@@ -67,9 +69,6 @@ def main():
 		try:
 			print "Reading %s" % (post.file)
 			post.parse()
-
-			print "Saving %s in %s" % (post.file, post.url_title)
-			post.save(tplenv=tplenv, extra_args=common_args)
 		except Exception, e:
 			print "    %s" % (str(e))
 			continue
@@ -78,7 +77,8 @@ def main():
 			'title': post.title,
 			'content': post.content,
 			'url': post.url_title,
-			'date': datetime.fromtimestamp(post.date_ts)
+			'date': datetime.fromtimestamp(post.date_ts),
+			'tags': post.tags
 		})
 
 	#
@@ -100,6 +100,25 @@ def main():
 		key=lambda pst: pst[sort],
 		reverse=sort_revers_order
 	)
+
+	#
+	# Tags Manager - Used to generate tags cloud
+	#
+	tagsmgr = TagManager()
+	tagsmgr.parse(posts=index_posts_list)
+	common_args['tags'] = tagsmgr.get_list()
+	tagsmgr.save(tplenv=tplenv, extra_args=common_args)
+
+	#
+	# save post files
+	#
+	for post in posts.posts_list:
+		try:
+			print "Saving %s in %s" % (post.file, post.url_title)
+			post.save(tplenv=tplenv, extra_args=common_args)
+		except Exception, e:
+			print "    %s" % (str(e))
+			continue
 
 	#
 	# generate and save the home page

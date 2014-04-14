@@ -41,6 +41,7 @@ class Post:
 		self.content = ''
 		self.url_title = ''
 		self.date_ts = 0
+		self.tags = ''
 
 		self.set_url_title()
 
@@ -64,7 +65,7 @@ class Post:
 		postfile = open(self.file, 'r')
 		for line in postfile:
 			if not in_body:
-				m = re.search('^(title|parser):(.*)', line)
+				m = re.search('^(title|parser|tags):(.*)', line)
 				if m:
 					header = m.group(1).strip()
 					value = m.group(2).strip()
@@ -72,6 +73,8 @@ class Post:
 						self.title = value
 					elif header == 'parser' and value in ALLOWED_PARSER:
 						self.parser = value
+					elif header == 'tags':
+						self.tags = map(lambda s: s.strip(), value.split(','))
 				else: # A blank line in headers -> change to the post content
 					in_body = True
 			else:

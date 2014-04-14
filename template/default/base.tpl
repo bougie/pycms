@@ -19,8 +19,17 @@
 		{% endblock %}
 		</div>
 
+		<div class="tagscloud">
+			<h2>TAGS</h2>
+			<div class="tagscloud_content">
+			{% for tag in tags %}
+				<a href="tags/{{tag}}.html">{{tag}}</a>
+			{% endfor %}
+			</div>
+		</div>
+
 		<div class="seealso">
-			<h2>A voir</h2>
+			<h2>A VOIR</h2>
 			<div class="seealso_content"
 				{{links}}
 			</div>

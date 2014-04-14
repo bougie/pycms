@@ -1,11 +1,17 @@
 #-*- coding: utf8 -*-
 
+import os
+
+from lib.function import save_file
+
+import settings
+
 class TagManager:
 	def __init__(self):
 		self.tags = {}
 
 	def add(self, tag, post):
-		if not tag in self.tags:
+		if not tag in self.tags.keys():
 			self.tags[tag] = []
 
 		self.tags[tag].append(post)
@@ -20,3 +26,22 @@ class TagManager:
 		for post in posts:
 			for tag in post['tags']:
 				self.add(tag=tag, post=post)
+
+	def save(self, tplenv, extra_args):
+		"""
+		Generate each pages which contain posts list associated with a tag
+		"""
+		tagdir = os.path.join(settings.OUT_DIR, 'tags')
+		if not os.path.isdir(tagdir):
+			os.mkdir(tagdir)
+
+		for tagname in self.get_list():
+			_args = {
+				'page_name': 'TAG %s - Liste des billets' % (tagname),
+				'posts': self.tags[tagname]
+			}
+
+			args = dict(_args.items() + extra_args.items())
+			tagtpl = tplenv.get_template(name='tag.tpl')
+			tagtpl_content = tagtpl.render(args)
+			save_file(path=os.path.join(tagdir, '%s.html' % tagname), content=tagtpl_content)
