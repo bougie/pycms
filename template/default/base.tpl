@@ -4,10 +4,10 @@
 		<title>{{page_title}}</title>
 		<meta charset="utf-8">
 
-		<link rel="stylesheet" href="static/css/style.css" />
+		<link rel="stylesheet" href="{{document_root}}static/css/style.css" />
 	</head>
 	<body>
-		<h1><a href="index.html">{{page_title}}</a></h1>
+		<h1><a href="{{document_root}}index.html">{{page_title}}</a></h1>
 
 		<div class="name">
 		{% block name %}
@@ -23,7 +23,7 @@
 			<h2>TAGS</h2>
 			<div class="tagscloud_content">
 			{% for tag in tags %}
-				<a href="tags/{{tag}}.html">{{tag}}</a>
+				<a href="{{document_root}}tags/{{tag}}.html">{{tag}}</a>
 			{% endfor %}
 			</div>
 		</div>

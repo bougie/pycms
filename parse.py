@@ -56,6 +56,7 @@ def main():
 	links.parse()
 
 	common_args = {
+		'document_root': settings.WEBSITE_DOCUMENT_ROOT,
 		'page_title': settings.WEBSITE_TITLE,
 		'links': links.get(),
 		'tags': ''
