@@ -10,7 +10,7 @@ except:
 	sys.exit(1)
 
 from lib.post import PostsManager
-from lib.function import save_file
+from lib.function import save_tpl
 from lib.static import move_static_files
 from lib.link import Link
 from lib.tag import TagManager
@@ -129,10 +129,12 @@ def main():
 		'page_name': 'Accueil - liste des billets',
 		'posts': index_posts_list
 	}
-	args = dict(_args.items() + common_args.items())
-	hometpl = tplenv.get_template(name='index.tpl')
-	hometpl_content = hometpl.render(args)
-	save_file(path=os.path.join(settings.OUT_DIR, 'index.html'), content=hometpl_content)
+	save_tpl(
+		tplenv=tplenv,
+		args=dict(_args.items() + common_args.items()),
+		tplname='index.tpl',
+		dst=os.path.join(settings.OUT_DIR, 'index.html')
+	)
 
 	#
 	# Move static file (css, js, img, ...) from the template dir to the output dir

@@ -4,7 +4,7 @@ import fnmatch
 import re
 
 import settings
-from lib.function import save_file
+from lib.function import save_tpl
 
 ALLOWED_PARSER = ['mdown', 'plain']
 
@@ -105,7 +105,10 @@ class Post:
 				'content': self.content
 			}
 		}
-		args = dict(_args.items() + extra_args.items())
-		tpl = tplenv.get_template(name='post.tpl')
-		tpl_content = tpl.render(args)
-		save_file(path=os.path.join(settings.OUT_DIR, '%s.html' % (self.url_title)), content=tpl_content)
+
+		save_tpl(
+			tplenv=tplenv,
+			args=dict(_args.items() + extra_args.items()),
+			tplname='post.tpl',
+			dst=os.path.join(settings.OUT_DIR, '%s.html' % (self.url_title))
+		)
