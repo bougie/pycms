@@ -3,31 +3,36 @@
 import os
 import fnmatch
 import re
+import logging
 
 ALLOWED_PARSER = ['mdown', 'plain']
 
 class Parser:
 	def __init__(self, file, parser = 'plain'):
+		self.headers = ['title', 'parser', 'tags']
 		self.parser = parser
 
-		self args = {}
+		self.file = file
+		self.args = {}
 
-	def parse(self, file):
+	def parse(self):
 		"""
 		Parse a file
 		"""
 		if not os.path.exists(self.file):
-			raise Exception("Post file does not exist")
+			raise Exception("File does not exist")
 
-		self.args['url_title'] = os.path.splitext(os.path.basename(file))[0]
-		self.args['date_ts'] = os.path.getmtime(file)
+		self.args['content'] = ''
+		self.args['url_title'] = os.path.splitext(os.path.basename(self.file))[0]
+		self.args['date_ts'] = os.path.getmtime(self.file)
+
+		for h in self.headers:
+			self.args[h] = ''
 
 		in_body = False
-
-		postfile = open(file, 'r')
-		for line in postfile:
+		for line in open(self.file, 'r'):
 			if not in_body:
-				m = re.search('^(title|parser|tags):(.*)', line)
+				m = re.search('^(' + '|'.join(self.headers) + '):(.*)', line)
 				if m:
 					header = m.group(1).strip()
 					value = m.group(2).strip()
@@ -50,8 +55,8 @@ class Parser:
 				except ImportError, e:
 					logging.warning("Markdown library does not exist")
 				except Exception, e:
-					logging.error"%s" % (str(e)))
+					logging.warning("%s" % (str(e)))
 					# On error, do nothing, text will be displayed in plain format
 					pass
 
-		postfile.close()
+		return self.args
