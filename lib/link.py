@@ -25,4 +25,4 @@ class Link:
 
 			self.content = args['content']
 		except Exception, e:
-			logging.warning("%s" % (str(e)))
+			logging.warning("LINK %s" % (str(e)))

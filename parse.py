@@ -25,15 +25,15 @@ from jinja2 import Environment, FileSystemLoader
 
 def main():
 	if len(settings.DATA_DIR) == 0 or len(settings.OUT_DIR) == 0:
-		logging.error("Please fill correctly the config file")
+		logging.error("MAIN Please fill correctly the config file")
 		sys.exit(1)
 
 	if not os.path.isdir(settings.DATA_DIR):
-		logging.error("Data dir '%s' does not exist" % (settings.DATA_DIR))
+		logging.error("MAIN Data dir '%s' does not exist" % (settings.DATA_DIR))
 		sys.exit(1)
 
 	if not os.path.isdir('template/%s' % (settings.WEBSITE_THEME)):
-		logging.error("Theme '%s' does not exist" % (settings.WEBSITE_THEME))
+		logging.error("MAIN Theme '%s' does not exist" % (settings.WEBSITE_THEME))
 		sys.exit(1)
 
 	if not os.path.isdir(settings.OUT_DIR):
@@ -47,7 +47,7 @@ def main():
 
 	posts.generate_list()
 	if len(posts.posts_list) == 0:
-		logging.error("Please write some posts before doing a parse")
+		logging.error("MAIN Please write some posts before doing a parse")
 		sys.exit(1)
 
 	theme_dir = 'template/%s' % (settings.WEBSITE_THEME)
@@ -74,10 +74,10 @@ def main():
 	index_posts_list = []
 	for post in posts.posts_list:
 		try:
-			logging.info("Reading %s" % (post.file))
+			logging.info("MAIN Reading %s" % (post.file))
 			post.parse()
 		except Exception, e:
-			logging.warning("    %s" % (str(e)))
+			logging.warning("MAIN %s" % (str(e)))
 			continue
 
 		index_posts_list.append({
@@ -121,10 +121,10 @@ def main():
 	#
 	for post in posts.posts_list:
 		try:
-			logging.info("Saving %s in %s" % (post.file, post.url_title))
+			logging.info("MAIN Saving %s in %s" % (post.file, post.url_title))
 			post.save(tplenv=tplenv, extra_args=common_args)
 		except Exception, e:
-			logging.warning("    %s" % (str(e)))
+			logging.warning("MAIN %s" % (str(e)))
 			continue
 
 	#
