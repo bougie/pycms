@@ -20,7 +20,7 @@ class Parser:
 		Parse a file
 		"""
 		if not os.path.exists(self.file):
-			raise Exception("File %s does not exist" % (self.file))
+			raise IOError("File %s does not exist" % (self.file))
 
 		self.args['content'] = ''
 		self.args['url_title'] = os.path.splitext(os.path.basename(self.file))[0]
