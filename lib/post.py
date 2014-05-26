@@ -2,9 +2,11 @@
 import os
 import fnmatch
 import re
+import logging
 
 import settings
 from lib.function import save_tpl
+from lib.parser import Parser
 
 ALLOWED_PARSER = ['mdown', 'plain']
 
@@ -43,56 +45,21 @@ class Post:
 		self.date_ts = 0
 		self.tags = ''
 
-		self.set_url_title()
-
-	def set_url_title(self):
-		"""
-		Set the post title shown in the URL
-		"""
-		self.url_title = os.path.splitext(os.path.basename(self.file))[0]
-
 	def parse(self):
 		"""
 		Parse a post file
 		"""
-		if not os.path.exists(self.file):
-			raise Exception("Post file does not exist")
+		p = Parser(file=self.file, parser=self.parser)
+		try:
+			args = p.parse()
 
-		self.date_ts = os.path.getmtime(self.file)
-
-		in_body = False
-
-		postfile = open(self.file, 'r')
-		for line in postfile:
-			if not in_body:
-				m = re.search('^(title|parser|tags):(.*)', line)
-				if m:
-					header = m.group(1).strip()
-					value = m.group(2).strip()
-					if header == 'title':
-						self.title = value
-					elif header == 'parser' and value in ALLOWED_PARSER:
-						self.parser = value
-					elif header == 'tags':
-						self.tags = map(lambda s: s.strip(), value.split(','))
-				else: # A blank line in headers -> change to the post content
-					in_body = True
-			else:
-				self.content += line
-
-		if not self.parser == 'plain': # We need to parse the content
-			if self.parser == 'mdown':
-				try:
-					from markdown import markdown
-					self.content = markdown(self.content)
-				except ImportError, e:
-					logging.warning("Markdown library does not exist")
-				except Exception, e:
-					logging.error("%s" % (str(e)))
-					# On error, do nothing, text will be displayed in plain format
-					pass
-
-		postfile.close()
+			self.title = args['title']
+			self.content = args['content']
+			self.url_title = args['url_title']
+			self.date_ts = args['date_ts']
+			self.tags = args['tags']
+		except Exception, e:
+			logging.warning("%s" % (str(e)))
 
 	def save(self, tplenv, extra_args={}):
 		"""

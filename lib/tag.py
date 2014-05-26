@@ -43,7 +43,7 @@ class TagManager:
 
 			save_tpl(
 				tplenv=tplenv,
-				args=dict(_args.items() + common_args.items()),
+				args=dict(_args.items() + extra_args.items()),
 				tplname='tag.tpl',
 				dst=os.path.join(tagdir, '%s.html' % tagname)
 	        )

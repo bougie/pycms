@@ -6,10 +6,11 @@ import logging
 
 import settings
 from lib.post import ALLOWED_PARSER
+from lib.parser import Parser
 
 class Link:
 	def __init__(self, file='links.txt'):
-		self.file = file
+		self.file = os.path.join(settings.DATA_DIR, file)
 
 		self.parser = settings.PARSER
 		self.content = ''
@@ -18,34 +19,10 @@ class Link:
 		return self.content
 
 	def parse(self):
-		file = os.path.join(settings.DATA_DIR, self.file)
-		if os.path.exists(file):
-			in_body = False
+		p = Parser(file=self.file, parser=self.parser)
+		try:
+			args = p.parse()
 
-			linksfile = open(file, 'r')
-			for line in linksfile:
-				if not in_body:
-					m = re.search('^(parser):(:*)', line)
-					if m:
-						header = m.group(1).strip()
-						value = m.group(2).strip()
-						if header == 'parser' and value in ALLOWED_PARSER:
-							self.parser = value
-					else:
-						in_body = True
-						if not len(line.strip()) == 0: # We don't include headers in the file, so the first line is a data one
-							self.content = line
-				else:
-					self.content += line
-
-			if not self.parser == 'plain':
-				if self.parser == 'mdown':
-					try:
-						from markdown import markdown
-						self.content = markdown(self.content)
-					except ImportError, e:
-						logging.warning("Markdown library does not exist")
-					except Exception, e:
-						logging.error("%s" % (str(e)))
-
-			linksfile.close()
+			self.content = args['content']
+		except Exception, e:
+			logging.warning("%s" % (str(e)))
