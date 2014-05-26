@@ -39,7 +39,7 @@ def main():
 	if not os.path.isdir(settings.OUT_DIR):
 		try:
 			os.mkdir(settings.OUT_DIR)
-		except Exception, e:
+		except Exception as e:
 			logging.error(str(e))
 			sys.exit(1)
 
@@ -76,7 +76,7 @@ def main():
 		try:
 			logging.info("MAIN Reading %s" % (post.file))
 			post.parse()
-		except Exception, e:
+		except Exception as e:
 			logging.warning("MAIN %s" % (str(e)))
 			continue
 
@@ -123,7 +123,7 @@ def main():
 		try:
 			logging.info("MAIN Saving %s in %s" % (post.file, post.url_title))
 			post.save(tplenv=tplenv, extra_args=common_args)
-		except Exception, e:
+		except Exception as e:
 			logging.warning("MAIN %s" % (str(e)))
 			continue
 
@@ -135,9 +135,10 @@ def main():
 		'page_name': 'Accueil - liste des billets',
 		'posts': index_posts_list
 	}
+	_args.update(common_args)
 	save_tpl(
 		tplenv=tplenv,
-		args=dict(_args.items() + common_args.items()),
+		args=_args,
 		tplname='index.tpl',
 		dst=os.path.join(settings.OUT_DIR, 'index.html')
 	)

@@ -1,7 +1,7 @@
 Installation
 ============
 
-PyCMS need jinja2 template library :
+PyCMS need python >= 3.3 to works. Jinja2 template library is also required :
 
 ```
 # pip install jinja2

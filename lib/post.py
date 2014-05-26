@@ -58,7 +58,7 @@ class Post:
 			self.url_title = args['url_title']
 			self.date_ts = args['date_ts']
 			self.tags = args['tags']
-		except Exception, e:
+		except Exception as e:
 			logging.warning("POST %s" % (str(e)))
 
 	def save(self, tplenv, extra_args={}):
@@ -72,10 +72,11 @@ class Post:
 				'content': self.content
 			}
 		}
+		_args.update(extra_args)
 
 		save_tpl(
 			tplenv=tplenv,
-			args=dict(_args.items() + extra_args.items()),
+			args=_args,
 			tplname='post.tpl',
 			dst=os.path.join(settings.OUT_DIR, '%s.html' % (self.url_title))
 		)

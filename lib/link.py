@@ -24,8 +24,8 @@ class Link:
 			args = p.parse()
 
 			self.content = args['content']
-		except IOError, e:
+		except IOError as e:
 			# Do not handle file does not exist error, it can be normal
 			pass
-		except Exception, e:
+		except Exception as e:
 			logging.warning("LINK %s" % (str(e)))

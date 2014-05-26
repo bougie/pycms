@@ -4,3 +4,4 @@ data
 data/*
 out
 out/*
+__pycache__

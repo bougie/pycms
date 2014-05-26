@@ -1,12 +1,13 @@
 #-*- coding: utf8 -*-
+import logging
 
 def save_file(path, content):
 	try:
 		fh = open(path, 'w+')
 		fh.write(content)
 		fh.close()
-	except Exception, e:
-		print 'ERROR: ' + str(e)
+	except Exception as e:
+		logging.error('SAVE %s' % (str(e)))
 
 def save_tpl(tplenv, args, tplname, dst):
 	tpl = tplenv.get_template(name=tplname)

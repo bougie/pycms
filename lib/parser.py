@@ -41,7 +41,7 @@ class Parser:
 					elif header == 'parser' and value in ALLOWED_PARSER:
 						self.args['parser'] = value
 					elif header == 'tags':
-						self.args['tags'] = map(lambda s: s.strip(), value.split(','))
+						self.args['tags'] = list(map(lambda s: s.strip(), value.split(',')))
 				else: # A blank line in headers -> change to the post content
 					in_body = True
 			else:
@@ -52,9 +52,9 @@ class Parser:
 				try:
 					from markdown import markdown
 					self.args['content'] = markdown(self.args['content'])
-				except ImportError, e:
+				except ImportError as e:
 					logging.warning("PARSER Markdown library does not exist")
-				except Exception, e:
+				except Exception as e:
 					logging.warning("PARSER %s" % (str(e)))
 					# On error, do nothing, text will be displayed in plain format
 					pass
