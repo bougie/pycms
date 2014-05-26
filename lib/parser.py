@@ -20,7 +20,7 @@ class Parser:
 		Parse a file
 		"""
 		if not os.path.exists(self.file):
-			raise Exception("File does not exist")
+			raise IOError("File %s does not exist" % (self.file))
 
 		self.args['content'] = ''
 		self.args['url_title'] = os.path.splitext(os.path.basename(self.file))[0]
@@ -53,9 +53,9 @@ class Parser:
 					from markdown import markdown
 					self.args['content'] = markdown(self.args['content'])
 				except ImportError, e:
-					logging.warning("Markdown library does not exist")
+					logging.warning("PARSER Markdown library does not exist")
 				except Exception, e:
-					logging.warning("%s" % (str(e)))
+					logging.warning("PARSER %s" % (str(e)))
 					# On error, do nothing, text will be displayed in plain format
 					pass
 

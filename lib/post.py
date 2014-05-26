@@ -59,7 +59,7 @@ class Post:
 			self.date_ts = args['date_ts']
 			self.tags = args['tags']
 		except Exception, e:
-			logging.warning("%s" % (str(e)))
+			logging.warning("POST %s" % (str(e)))
 
 	def save(self, tplenv, extra_args={}):
 		"""
