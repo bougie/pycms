@@ -1,13 +1,19 @@
 #-*- coding: utf8 -*-
 import sys
 import os
+import logging
 from datetime import datetime
 
 try:
 	import settings
 except:
-	print "ERROR: No config file found"
+	print("No config file found")
 	sys.exit(1)
+
+logging.basicConfig(
+	format='%(asctime)s PYCMS %(levelname)s %(message)s',
+	level=logging.DEBUG
+)
 
 from lib.post import PostsManager
 from lib.function import save_tpl
@@ -19,29 +25,29 @@ from jinja2 import Environment, FileSystemLoader
 
 def main():
 	if len(settings.DATA_DIR) == 0 or len(settings.OUT_DIR) == 0:
-		print "ERROR: Please fill correctly the config file"
+		logging.error("Please fill correctly the config file")
 		sys.exit(1)
 
 	if not os.path.isdir(settings.DATA_DIR):
-		print "ERROR: Data dir '%s' does not exist" % (settings.DATA_DIR)
+		logging.error("Data dir '%s' does not exist" % (settings.DATA_DIR))
 		sys.exit(1)
 
 	if not os.path.isdir('template/%s' % (settings.WEBSITE_THEME)):
-		print "ERROR: Theme '%s' does not exist" % (settings.WEBSITE_THEME)
+		logging.error("Theme '%s' does not exist" % (settings.WEBSITE_THEME))
 		sys.exit(1)
 
 	if not os.path.isdir(settings.OUT_DIR):
 		try:
 			os.mkdir(settings.OUT_DIR)
 		except Exception, e:
-			print "ERROR: " + str(e)
+			logging.error(str(e))
 			sys.exit(1)
 
 	posts = PostsManager()
 
 	posts.generate_list()
 	if len(posts.posts_list) == 0:
-		print "ERROR: please write some posts before doing a parse"
+		logging.error("Please write some posts before doing a parse")
 		sys.exit(1)
 
 	theme_dir = 'template/%s' % (settings.WEBSITE_THEME)
@@ -68,10 +74,10 @@ def main():
 	index_posts_list = []
 	for post in posts.posts_list:
 		try:
-			print "Reading %s" % (post.file)
+			logging.info("Reading %s" % (post.file))
 			post.parse()
 		except Exception, e:
-			print "    %s" % (str(e))
+			logging.warning("    %s" % (str(e)))
 			continue
 
 		index_posts_list.append({
@@ -115,10 +121,10 @@ def main():
 	#
 	for post in posts.posts_list:
 		try:
-			print "Saving %s in %s" % (post.file, post.url_title)
+			logging.info("Saving %s in %s" % (post.file, post.url_title))
 			post.save(tplenv=tplenv, extra_args=common_args)
 		except Exception, e:
-			print "    %s" % (str(e))
+			logging.warning("    %s" % (str(e)))
 			continue
 
 	#
