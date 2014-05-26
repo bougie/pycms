@@ -23,7 +23,6 @@ class Link:
 		try:
 			args = p.parse()
 
-			self.parser = args['parser']
 			self.content = args['content']
 		except IOError as e:
 			# Do not handle file does not exist error, it can be normal

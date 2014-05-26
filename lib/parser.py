@@ -39,7 +39,7 @@ class Parser:
 					if header == 'title':
 						self.args['title'] = value
 					elif header == 'parser' and value in ALLOWED_PARSER:
-						self.args['parser'] = value
+						self.parser = value
 					elif header == 'tags':
 						self.args['tags'] = list(map(lambda s: s.strip(), value.split(',')))
 				else: # A blank line in headers -> change to the post content
