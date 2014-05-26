@@ -2,6 +2,7 @@
 
 import os
 import re
+import logging
 
 import settings
 from lib.post import ALLOWED_PARSER
@@ -43,9 +44,8 @@ class Link:
 						from markdown import markdown
 						self.content = markdown(self.content)
 					except ImportError, e:
-						print "ERROR: markdown library does not exist"
+						logging.warning("Markdown library does not exist")
 					except Exception, e:
-						print "ERROR: %s" % (str(e))
-						pass
+						logging.error("%s" % (str(e)))
 
 			linksfile.close()
