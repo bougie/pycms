@@ -2,7 +2,6 @@
 import sys
 import os
 import logging
-from datetime import datetime
 
 try:
 	import settings
@@ -71,22 +70,7 @@ def main():
 	#
 	# Posts generation
 	#
-	index_posts_list = []
-	for post in posts.get_list():
-		try:
-			logging.info("MAIN Reading %s" % (post.file))
-			post.parse()
-		except Exception as e:
-			logging.warning("MAIN %s" % (str(e)))
-			continue
-
-		index_posts_list.append({
-			'title': post.title,
-			'content': post.content,
-			'url': post.url_title,
-			'date': datetime.fromtimestamp(post.date_ts),
-			'tags': post.tags
-		})
+	index_posts_list = posts.parse()
 
 	#
 	# Sort posts list on the home page

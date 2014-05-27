@@ -3,6 +3,7 @@ import os
 import fnmatch
 import re
 import logging
+from datetime import datetime
 
 import settings
 from lib.function import save_tpl
@@ -36,6 +37,30 @@ class PostsManager:
 
 	def get_list(self):
 		return self.posts_list
+
+	def parse(self):
+		"""
+		Parse all posts from the posts list
+		"""
+		index_posts_list = []
+		for post in self.posts_list:
+			try:
+				logging.info("POSTS Reading %s" % (post.file))
+				post.parse()
+			except Exception as e:
+				logging.warning("POSTS %s" % (str(e)))
+				# On error do not add into the list
+				# but continue with others posts
+				continue
+
+			index_posts_list.append({
+				'title': post.title,
+				'content': post.content,
+				'url': post.url_title,
+				'date': datetime.fromtimestamp(post.date_ts),
+				'tags': post.tags
+			})
+		return index_posts_list
 
 	def save(self, tplenv, extra_args={}):
 		"""
