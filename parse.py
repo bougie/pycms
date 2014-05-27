@@ -72,7 +72,7 @@ def main():
 	# Posts generation
 	#
 	index_posts_list = []
-	for post in posts.posts_list:
+	for post in posts.get_list():
 		try:
 			logging.info("MAIN Reading %s" % (post.file))
 			post.parse()
@@ -117,7 +117,7 @@ def main():
 	tagsmgr.save(tplenv=tplenv, extra_args=common_args)
 
 	#
-	# save post files
+	# save posts files
 	#
 	posts.save(tplenv=tplenv, extra_args=common_args)
 

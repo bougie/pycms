@@ -34,6 +34,9 @@ class PostsManager:
 		"""
 		self._list(path=settings.DATA_DIR)
 
+	def get_list(self):
+		return self.posts_list
+
 	def save(self, tplenv, extra_args={}):
 		"""
 		Save all posts into a file
