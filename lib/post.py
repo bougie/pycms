@@ -34,6 +34,20 @@ class PostsManager:
 		"""
 		self._list(path=settings.DATA_DIR)
 
+	def save(self, tplenv, extra_args={}):
+		"""
+		Save all posts into a file
+		"""
+		for post in self.posts_list:
+			try:
+				logging.info("POSTS Saving %s in %s" % (
+					post.file, post.url_title)
+				)
+				post.save(tplenv=tplenv, extra_args=extra_args)
+			except Exception as e:
+				logging.warning("POSTS %s" % (str(e)))
+				continue
+
 class Post:
 	def __init__(self, file):
 		self.file = file

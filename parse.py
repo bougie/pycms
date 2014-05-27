@@ -119,13 +119,7 @@ def main():
 	#
 	# save post files
 	#
-	for post in posts.posts_list:
-		try:
-			logging.info("MAIN Saving %s in %s" % (post.file, post.url_title))
-			post.save(tplenv=tplenv, extra_args=common_args)
-		except Exception as e:
-			logging.warning("MAIN %s" % (str(e)))
-			continue
+	posts.save(tplenv=tplenv, extra_args=common_args)
 
 	#
 	# generate and save the home page
