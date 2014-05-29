@@ -42,7 +42,7 @@ class PostsManager:
 		"""
 		Parse all posts from the posts list
 		"""
-		index_posts_list = []
+		posts_list = []
 		for post in self.posts_list:
 			try:
 				logging.info("POSTS Reading %s" % (post.file))
@@ -53,14 +53,14 @@ class PostsManager:
 				# but continue with others posts
 				continue
 
-			index_posts_list.append({
+			posts_list.append({
 				'title': post.title,
 				'content': post.content,
 				'url': post.url_title,
 				'date': datetime.fromtimestamp(post.date_ts),
 				'tags': post.tags
 			})
-		return index_posts_list
+		return posts_list
 
 	def save(self, tplenv, extra_args={}):
 		"""
