@@ -40,7 +40,7 @@ class PostsManager:
 		"""
 		Get the last post date. Posts need to be parsed before
 		"""
-		return self.recent_date
+		return datetime.fromtimestamp(self.recent_date)
 
 	def get_list(self):
 		return self.posts_list
