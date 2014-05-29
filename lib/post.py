@@ -14,6 +14,7 @@ ALLOWED_PARSER = ['mdown', 'plain']
 class PostsManager:
 	def __init__(self, file=None):
 		self.posts_list = []
+		self.recent_date = None
 
 	def _list(self, path, dirname = ''):
 		"""
@@ -34,6 +35,12 @@ class PostsManager:
 		Generate posts tree
 		"""
 		self._list(path=settings.DATA_DIR)
+
+	def get_last_post_date():
+		"""
+		Get the last post date. Posts need to be parsed before
+		"""
+		return self.recent_date
 
 	def get_list(self):
 		return self.posts_list
@@ -60,6 +67,11 @@ class PostsManager:
 				'date': datetime.fromtimestamp(post.date_ts),
 				'tags': post.tags
 			})
+			
+			if not self.recent_date is None:
+				self.recent_date = max(self.recent_date, post.date_ts)
+			else:
+				self.recent_date = post.date_ts
 		return posts_list
 
 	def save(self, tplenv, extra_args={}):
