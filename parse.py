@@ -109,6 +109,37 @@ def main():
 	posts.save(tplenv=tplenv, extra_args=common_args)
 
 	#
+	# RSS generator
+	#
+	# Base class for generating RSS feed
+	if settings.RSS:
+		rss = RSS(
+			link='%s/feed' % (settings.WEBSITE_BASE_URL),
+			title='%s feed' % (settings.WEBSITE_TITLE),
+			description='%s' % (settings.WEBSITE_TITLE)
+		)
+		# Sort post list by date if not did
+		if sort != 'date' or sort_revers_order != True:
+			index_posts_list = sorted(
+				index_posts_list,
+				key=lambda pst: pst['date'],
+				reverse=True
+			)
+		for p in index_posts_list:
+			rss.add_item(
+				link=p.get('url_title'),
+				title=p.get('title'),
+				description=p.get('content'),
+				date=p.get('date')
+			)
+		rss.save(date=posts.get_last_post_date())
+		common_args['rss'] = rss.get_link()
+		if len(common_args['rss']) > 0:
+			common_args['activate_rss'] = True
+	else:
+		common_args['activate_rss'] = False
+
+	#
 	# generate and save the home page
 	#
 	_args = {
@@ -131,31 +162,6 @@ def main():
 		static_dir = os.path.join(theme_dir, 'static'),
 		output_dir = os.path.join(settings.OUT_DIR, 'static')
 	)
-
-	#
-	# RSS generator
-	#
-	# Base class for generating RSS feed
-	rss = RSS(
-		link='%s/feed' % (settings.WEBSITE_BASE_URL),
-		title='%s feed' % (settings.WEBSITE_TITLE),
-		description='%s' % (settings.WEBSITE_TITLE)
-	)
-	# Sort post list by date if not did
-	if sort != 'date' or sort_revers_order != True:
-		index_posts_list = sorted(
-			index_posts_list,
-			key=lambda pst: pst['date'],
-			reverse=True
-		)
-	for p in index_posts_list:
-		rss.add_item(
-			link=p.get('url_title'),
-			title=p.get('title'),
-			description=p.get('content'),
-			date=p.get('date')
-		)
-	rss.save(date=posts.get_last_post_date())
 
 if __name__ == "__main__":
 	main()

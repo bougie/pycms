@@ -5,6 +5,10 @@
 		<meta charset="utf-8">
 
 		<link rel="stylesheet" href="{{document_root}}static/css/style.css" />
+
+		{% if activate_rss %}
+			<link rel="alternate" type="application/rss+xml" title="RSS" href="{{rss}}" />
+		{% endif %}
 	</head>
 	<body>
 		<h1><a href="{{document_root}}index.html">{{page_title}}</a></h1>
@@ -36,6 +40,14 @@
 				<div class="seealso_content"
 					{{links}}
 				</div>
+			</div>
+		{% endif %}
+		{% if activate_rss %}
+			<div class="footer">
+				<h2>Pied de page</h2>
+				<a type="application/rss+xml" href="{{rss}}">
+					Flux RSS des billets
+				</a> 
 			</div>
 		{% endif %}
 	</body>

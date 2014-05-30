@@ -30,6 +30,10 @@ class RSS:
 		except Exception as e:
 			logging.warning('RSS unable to add item : %s' % (str(e)))
 
+	"""Return the link to the RSS feed"""
+	def get_link(self):
+		return self.link
+
 	"""Save the feed into the out dir"""
 	def save(self, date = None):
 		if not date is None:
