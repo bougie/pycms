@@ -2,6 +2,7 @@
 import sys
 import os
 import logging
+from datetime import datetime
 
 try:
 	import settings
@@ -19,6 +20,7 @@ from lib.function import save_tpl
 from lib.static import move_static_files
 from lib.link import Link
 from lib.tag import TagManager
+from lib.rss import RSS
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -54,6 +56,7 @@ def main():
 	tplenv = Environment()
 	tplenv.loader = FileSystemLoader(theme_dir)
 
+	
 	#
 	# Generate links
 	#
@@ -61,7 +64,7 @@ def main():
 	links.parse()
 
 	common_args = {
-		'document_root': settings.WEBSITE_DOCUMENT_ROOT,
+		'document_root': settings.WEBSITE_BASE_URL,
 		'page_title': settings.WEBSITE_TITLE,
 		'links': links.get(),
 		'tags': ''
@@ -128,6 +131,31 @@ def main():
 		static_dir = os.path.join(theme_dir, 'static'),
 		output_dir = os.path.join(settings.OUT_DIR, 'static')
 	)
+
+	#
+	# RSS generator
+	#
+	# Base class for generating RSS feed
+	rss = RSS(
+		link='%s/feed' % (settings.WEBSITE_BASE_URL),
+		title='%s feed' % (settings.WEBSITE_TITLE),
+		description='%s' % (settings.WEBSITE_TITLE)
+	)
+	# Sort post list by date if not did
+	if sort != 'date' or sort_revers_order != True:
+		index_posts_list = sorted(
+			index_posts_list,
+			key=lambda pst: pst['date'],
+			reverse=True
+		)
+	for p in index_posts_list:
+		rss.add_item(
+			link=p.get('url_title'),
+			title=p.get('title'),
+			description=p.get('content'),
+			date=p.get('date')
+		)
+	rss.save(date=posts.get_last_post_date())
 
 if __name__ == "__main__":
 	main()

@@ -36,11 +36,11 @@ class PostsManager:
 		"""
 		self._list(path=settings.DATA_DIR)
 
-	def get_last_post_date():
+	def get_last_post_date(self):
 		"""
 		Get the last post date. Posts need to be parsed before
 		"""
-		return datetime.fromtimestamp(self.recent_date)
+		return self.recent_date
 
 	def get_list(self):
 		return self.posts_list
