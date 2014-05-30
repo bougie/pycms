@@ -2,7 +2,7 @@
 
 WEBSITE_TITLE = ""
 WEBSITE_THEME = "default"
-WEBSITE_DOCUMENT_ROOT = ""
+WEBSITE_BASE_URL = ""
 
 POSTS_SORT = "date-DESC"
 PARSER = 'mdown'
