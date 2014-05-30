@@ -13,7 +13,7 @@
 	<ul>
 		{% for p in posts %}
 			<li>
-				<a href="{{document_root}}{{p.url}}.html">
+				<a href="{{base_url}}/{{p.url}}.html">
 					{{p.date.strftime("%Y-%m-%d")}}&nbsp;-&nbsp;{{p.title}}
 				</a>
 			</li>

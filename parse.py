@@ -64,7 +64,7 @@ def main():
 	links.parse()
 
 	common_args = {
-		'document_root': settings.WEBSITE_BASE_URL,
+		'base_url': settings.WEBSITE_BASE_URL,
 		'page_title': settings.WEBSITE_TITLE,
 		'links': links.get(),
 		'tags': ''

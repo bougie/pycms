@@ -4,14 +4,14 @@
 		<title>{{page_title}}</title>
 		<meta charset="utf-8">
 
-		<link rel="stylesheet" href="{{document_root}}static/css/style.css" />
+		<link rel="stylesheet" href="{{base_url}}/static/css/style.css" />
 
 		{% if activate_rss %}
 			<link rel="alternate" type="application/rss+xml" title="RSS" href="{{rss}}" />
 		{% endif %}
 	</head>
 	<body>
-		<h1><a href="{{document_root}}index.html">{{page_title}}</a></h1>
+		<h1><a href="{{base_url}}/index.html">{{page_title}}</a></h1>
 
 		<div class="name">
 		{% block name %}
@@ -28,7 +28,7 @@
 				<h2>TAGS</h2>
 				<div class="tagscloud_content">
 				{% for tag in tags %}
-					<a href="{{document_root}}tags/{{tag}}.html">{{tag}}</a>
+					<a href="{{base_url}}/tags/{{tag}}.html">{{tag}}</a>
 				{% endfor %}
 				</div>
 			</div
