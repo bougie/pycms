@@ -109,30 +109,6 @@ def main():
 	posts.save(tplenv=tplenv, extra_args=common_args)
 
 	#
-	# generate and save the home page
-	#
-	_args = {
-		'page_title': settings.WEBSITE_TITLE,
-		'page_name': 'Accueil - liste des billets',
-		'posts': index_posts_list
-	}
-	_args.update(common_args)
-	save_tpl(
-		tplenv=tplenv,
-		args=_args,
-		tplname='index.tpl',
-		dst=os.path.join(settings.OUT_DIR, 'index.html')
-	)
-
-	#
-	# Move static file (css, js, img, ...) from the template dir to the output dir
-	#
-	move_static_files(
-		static_dir = os.path.join(theme_dir, 'static'),
-		output_dir = os.path.join(settings.OUT_DIR, 'static')
-	)
-
-	#
 	# RSS generator
 	#
 	# Base class for generating RSS feed
@@ -156,6 +132,33 @@ def main():
 			date=p.get('date')
 		)
 	rss.save(date=posts.get_last_post_date())
+	common_args['rss'] = rss.get_link()
+	if len(common_args['rss']) > 0:
+		common_args['activate_rss'] = True
+
+	#
+	# generate and save the home page
+	#
+	_args = {
+		'page_title': settings.WEBSITE_TITLE,
+		'page_name': 'Accueil - liste des billets',
+		'posts': index_posts_list
+	}
+	_args.update(common_args)
+	save_tpl(
+		tplenv=tplenv,
+		args=_args,
+		tplname='index.tpl',
+		dst=os.path.join(settings.OUT_DIR, 'index.html')
+	)
+
+	#
+	# Move static file (css, js, img, ...) from the template dir to the output dir
+	#
+	move_static_files(
+		static_dir = os.path.join(theme_dir, 'static'),
+		output_dir = os.path.join(settings.OUT_DIR, 'static')
+	)
 
 if __name__ == "__main__":
 	main()
