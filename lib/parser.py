@@ -5,6 +5,8 @@ import fnmatch
 import re
 import logging
 
+from lib.wrap import wrap
+
 ALLOWED_PARSER = ['mdown', 'plain']
 
 class Parser:
@@ -23,6 +25,7 @@ class Parser:
 			raise IOError("File %s does not exist" % (self.file))
 
 		self.args['content'] = ''
+		self.args['small_content'] = ''
 		self.args['url_title'] = os.path.splitext(os.path.basename(self.file))[0]
 		self.args['date_ts'] = os.path.getmtime(self.file)
 
@@ -49,11 +52,16 @@ class Parser:
 			else:
 				self.args['content'] += line
 
+		self.args['small_content'] = wrap(content=self.args['content'])
+
 		if not self.parser == 'plain': # We need to parse the content
 			if self.parser == 'mdown':
 				try:
 					from markdown import markdown
 					self.args['content'] = markdown(self.args['content'])
+					self.args['small_content'] = markdown(
+						self.args['small_content']
+					)
 				except ImportError as e:
 					logging.warning("PARSER Markdown library does not exist")
 				except Exception as e:

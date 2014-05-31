@@ -63,6 +63,7 @@ class PostsManager:
 			posts_list.append({
 				'title': post.title,
 				'content': post.content,
+				'description': post.small_content,
 				'url': post.url_title,
 				'date': datetime.fromtimestamp(post.date_ts),
 				'tags': post.tags
@@ -95,6 +96,7 @@ class Post:
 
 		self.title = ''
 		self.content = ''
+		self.small_content = ''
 		self.url_title = ''
 		self.date_ts = 0
 		self.tags = ''
@@ -109,6 +111,7 @@ class Post:
 
 			self.title = args['title']
 			self.content = args['content']
+			self.small_content = args['small_content']
 			self.url_title = args['url_title']
 			self.date_ts = args['date_ts']
 			self.tags = args['tags']
