@@ -16,7 +16,7 @@ class PostsManager:
 		self.posts_list = []
 		self.recent_date = None
 
-	def _list(self, path, dirname = ''):
+	def generate_list(self, path, dirname = ''):
 		"""
 		Generate posts tree
 		"""
@@ -24,17 +24,11 @@ class PostsManager:
 		for item in _items:
 			npath = os.path.join(path, item)
 			if os.path.isdir(npath):
-				self._list(path=npath, dirname=item)
+				self.generate_list(path=npath, dirname=item)
 			else:
 				bpfile = os.path.join(path, item)
 				if fnmatch.fnmatch(bpfile, '*.bp'):
 					self.posts_list.append(Post(file=bpfile))
-
-	def generate_list(self):
-		"""
-		Generate posts tree
-		"""
-		self._list(path=settings.DATA_DIR)
 
 	def get_last_post_date(self):
 		"""

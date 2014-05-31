@@ -46,7 +46,7 @@ def main():
 
 	posts = PostsManager()
 
-	posts.generate_list()
+	posts.generate_list(path=settings.DATA_DIR)
 	if len(posts.posts_list) == 0:
 		logging.error("MAIN Please write some posts before doing a parse")
 		sys.exit(1)
