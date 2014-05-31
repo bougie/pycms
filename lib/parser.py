@@ -4,6 +4,7 @@ import os
 import fnmatch
 import re
 import logging
+import time
 
 from lib.wrap import wrap
 
@@ -11,7 +12,7 @@ ALLOWED_PARSER = ['mdown', 'plain']
 
 class Parser:
 	def __init__(self, file, parser = 'plain'):
-		self.headers = ['title', 'parser', 'tags', 'author']
+		self.headers = ['title', 'parser', 'tags', 'author', 'date']
 		self.parser = parser
 
 		self.file = file
@@ -50,6 +51,14 @@ class Parser:
 						)
 					elif header == 'author':
 						self.args['author'] = value
+					elif header == 'date':
+						try:
+							self.args['date_ts'] = time.mktime(
+								time.strptime(value, '%Y-%m-%d %H:%M')
+							)
+						except Exception as e:
+							# On error, keep the last modified ts of the file
+							logging.info('PARSER %s' % (str(e)))
 				else: # A blank line in headers -> change to the post content
 					in_body = True
 			else:
