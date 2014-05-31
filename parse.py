@@ -123,12 +123,14 @@ def main():
 		)
 		# Sort post list by date if not did
 		if sort != 'date' or sort_revers_order != True:
-			index_posts_list = sorted(
+			rss_posts_list = sorted(
 				index_posts_list,
 				key=lambda pst: pst['date'],
 				reverse=True
 			)
-		for p in index_posts_list:
+		else:
+			rss_posts_list = index_posts_list
+		for p in rss_posts_list:
 			rss.add_item(
 				link=p.get('url_title'),
 				title=p.get('title'),
