@@ -53,5 +53,6 @@ class RSS:
 				docs=None
 			)
 			rss.write_xml(open(self.file, "w"), encoding='UTF-8')
+			logging.info('RSS saving feed in %s' % (self.file))
 		except Exception as e:
 			logging.warning("RSS %s" % (str(e)))
