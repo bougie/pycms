@@ -21,6 +21,8 @@ A blog post is make in two different part :
 title: title of the post
 parser: mdown / plain / whatever
 tags: tag1,tag2, tag3
+author: pseudo
+date: 2042-01-31 13:37
 
 the content of the post
 ```
