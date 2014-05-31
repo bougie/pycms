@@ -31,6 +31,7 @@ the content of the post
 
   * **parser** is not required if you set PARSER in settings.py file. But you con use a different parser for only one post, and in this case, you have to set this header. Only **mdown** and **plain** are supported.
   * **tags** is not required. Specify a list of words separated by a ','.
+  * **author** is not required. Specify the pseudo of the author for the post.
 
 #### Content
 
