@@ -60,7 +60,8 @@ class PostsManager:
 				'description': post.small_content,
 				'url': post.url_title,
 				'date': datetime.fromtimestamp(post.date_ts),
-				'tags': post.tags
+				'tags': post.tags,
+				'author': post.author
 			})
 			
 			if not self.recent_date is None:
@@ -94,6 +95,7 @@ class Post:
 		self.url_title = ''
 		self.date_ts = 0
 		self.tags = ''
+		self.author = None
 
 	def parse(self):
 		"""
@@ -109,6 +111,7 @@ class Post:
 			self.url_title = args['url_title']
 			self.date_ts = args['date_ts']
 			self.tags = args['tags']
+			self.author = args['author']
 		except Exception as e:
 			logging.warning("POST %s" % (str(e)))
 
@@ -120,7 +123,8 @@ class Post:
 			'page_name': 'Billet - Lecture',
 			'post': {
 				'title': self.title,
-				'content': self.content
+				'content': self.content,
+				'author': self.author
 			}
 		}
 		_args.update(extra_args)

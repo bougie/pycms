@@ -11,7 +11,7 @@ ALLOWED_PARSER = ['mdown', 'plain']
 
 class Parser:
 	def __init__(self, file, parser = 'plain'):
-		self.headers = ['title', 'parser', 'tags']
+		self.headers = ['title', 'parser', 'tags', 'author']
 		self.parser = parser
 
 		self.file = file
@@ -28,6 +28,7 @@ class Parser:
 		self.args['small_content'] = ''
 		self.args['url_title'] = os.path.splitext(os.path.basename(self.file))[0]
 		self.args['date_ts'] = os.path.getmtime(self.file)
+		self.args['author'] = None
 
 		for h in self.headers:
 			self.args[h] = ''
@@ -47,6 +48,8 @@ class Parser:
 						self.args['tags'] = list(
 							map(lambda s: s.strip(), value.split(','))
 						)
+					elif header == 'author':
+						self.args['author'] = value
 				else: # A blank line in headers -> change to the post content
 					in_body = True
 			else:
