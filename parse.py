@@ -98,20 +98,6 @@ def main():
 		reverse=sort_revers_order
 	)
 
-	#
-	# Tags Manager - Used to generate tags cloud
-	#
-	tagsmgr = TagManager()
-	tagsmgr.parse(posts=index_posts_list)
-	common_args['tags'] = tagsmgr.get_list()
-	tagsmgr.save(tplenv=tplenv, extra_args=common_args)
-
-	#
-	# save posts files
-	#
-	posts.save(tplenv=tplenv, extra_args=common_args)
-
-	#
 	# RSS generator
 	#
 	# Base class for generating RSS feed
@@ -143,6 +129,19 @@ def main():
 			common_args['activate_rss'] = True
 	else:
 		common_args['activate_rss'] = False
+
+	#
+	# Tags Manager - Used to generate tags cloud
+	#
+	tagsmgr = TagManager()
+	tagsmgr.parse(posts=index_posts_list)
+	common_args['tags'] = tagsmgr.get_list()
+	tagsmgr.save(tplenv=tplenv, extra_args=common_args)
+
+	#
+	# save posts files
+	#
+	posts.save(tplenv=tplenv, extra_args=common_args)
 
 	#
 	# generate and save the home page
