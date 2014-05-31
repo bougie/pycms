@@ -66,6 +66,9 @@ def main():
 	common_args = {
 		'base_url': settings.WEBSITE_BASE_URL,
 		'page_title': settings.WEBSITE_TITLE,
+		'page_author': settings.WEBSITE_AUTHOR,
+		'page_keywords': settings.WEBSITE_KEYWORDS,
+		'page_description': settings.WEBSITE_DESCRIPTION,
 		'links': links.get(),
 		'tags': ''
 	}

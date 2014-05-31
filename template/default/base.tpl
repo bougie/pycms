@@ -4,6 +4,10 @@
 		<title>{{page_title}}</title>
 		<meta charset="utf-8">
 
+		<meta name="author" content="{{page_author}}" />
+		<meta name="keywords" content="{{page_keywords}}" />
+		<meta name="description" content="{{page_description}}" />
+
 		<link rel="stylesheet" href="{{base_url}}/static/css/style.css" />
 
 		{% if activate_rss %}
@@ -11,44 +15,42 @@
 		{% endif %}
 	</head>
 	<body>
-		<h1><a href="{{base_url}}/index.html">{{page_title}}</a></h1>
+		<div id="page">
+			<div id="header">
+				<h1><a href="{{base_url}}/index.html">{{page_title}}</a></h1>
+			</div>
 
-		<div class="name">
-		{% block name %}
-		{% endblock %}
-		</div>
+			<div id="content">
+				{% block content %}
+				{% endblock %}
+			</div>
 
-		<div class="content">
-		{% block content %}
-		{% endblock %}
-		</div>
-
-		{% if tags|length > 0 %}
-			<div class="tagscloud">
-				<h2>TAGS</h2>
-				<div class="tagscloud_content">
-				{% for tag in tags %}
-					<a href="{{base_url}}/tags/{{tag}}.html">{{tag}}</a>
-				{% endfor %}
-				</div>
-			</div
-		{% endif %}
-
-		{% if links %}
-			<div class="seealso">
-				<h2>A VOIR</h2>
-				<div class="seealso_content"
+			<div id="menu">
+				<h2>SITE</h2>
+				<ul>
+					<li><a href="{{base_url}}/index.html">Accueil</a></li>
+				</ul>
+				{% if links %}
+					<h2>LIENS</h2>
 					{{links}}
-				</div>
+				{% endif %}
+				
+				{% if tags|length > 0 %}
+					<h2>TAGS</h2>
+					{% for tag in tags %}
+						<a href="{{base_url}}/tags/{{tag}}.html">{{tag}}</a>
+					{% endfor %}
+				{% endif %}
+				{% if activate_rss %}
+					<br /><br />
+					<a type="application/rss+xml" href="{{rss}}">
+						<img src="{{base_url}}/static/img/rss.jpg" alt="RSS" />
+					</a> 
+				{% endif %}
+
 			</div>
-		{% endif %}
-		{% if activate_rss %}
-			<div class="footer">
-				<h2>Pied de page</h2>
-				<a type="application/rss+xml" href="{{rss}}">
-					Flux RSS des billets
-				</a> 
-			</div>
-		{% endif %}
+
+			<div class="cleaner"></div>
+		</div>
 	</body>
 </html>

@@ -1,23 +1,12 @@
 {% extends 'base.tpl' %}
 
-{% block name %}
-<h2>NOM</h2>
-<div class="name_content">
-	{{page_name}}
-</div>
-{% endblock %}
-
 {% block content %}
-<h2>BILLETS</h2>
-<div class="content_content">
-	<ul>
-		{% for p in posts %}
-			<li>
+	{% for p in posts %}
+		<div class="article">
+			<h2>
 				<a href="{{base_url}}/{{p.url}}.html">
-					{{p.date.strftime("%Y-%m-%d")}}&nbsp;-&nbsp;{{p.title}}
+					{{p.date.strftime("[%d/%d/%Y]")}}&nbsp;{{p.title}}</h2>
 				</a>
-			</li>
-		{% endfor %}
-	</ul>
-</div>
+		</div>
+	{% endfor %}
 {% endblock %}
