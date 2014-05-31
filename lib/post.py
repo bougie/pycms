@@ -124,7 +124,10 @@ class Post:
 			'post': {
 				'title': self.title,
 				'content': self.content,
-				'author': self.author
+				'author': self.author,
+				'tags': self.tags,
+				'url_title': self.url_title,
+				'date': datetime.fromtimestamp(self.date_ts)
 			}
 		}
 		_args.update(extra_args)
