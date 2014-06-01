@@ -29,6 +29,10 @@ body
 	list-style: none;
 	list-style-type: none;
 }
+#menu a
+{
+    color: #444444;
+}
 
 #content
 {
@@ -38,14 +42,25 @@ body
 #content .article { width: 95%; }
 #content .article h2
 {
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #444444;
 	padding-bottom: 2px;
 }
-#content .article h2 a { text-decoration: none; }
+
+h1, h1 a, h1 a:hover, h1 a:after
+{
+    background-color: #444444;
+    color: white;
+    text-decoration: none;
+    padding: 6px;
+}
+h2
+{
+    color: #0082B0;
+}
 
 a, a:hover, a:visited
 {
-	color: black;
+	color: #0082B0;
 	text-decoration: none;
 }
 a:hover { text-decoration: underline; }
