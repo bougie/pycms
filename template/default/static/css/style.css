@@ -39,14 +39,18 @@ body
 	float: left;
 	width: 79%;
 }
-#content .article { width: 95%; }
-#content .article h2
+#content .article_item, #content .article
+{
+	width: 95%;
+	margin-bottom: 30px;
+}
+#content .article_item h2, #content .article h1
 {
 	border-bottom: 1px solid #444444;
 	padding-bottom: 2px;
 }
 
-h1, h1 a, h1 a:hover, h1 a:after
+h1, h1 a, h1 a:hover, h1 a:visited
 {
     background-color: #444444;
     color: white;
