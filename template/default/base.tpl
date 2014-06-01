@@ -47,10 +47,12 @@
 						<img src="{{base_url}}/static/img/rss.jpg" alt="RSS" />
 					</a> 
 				{% endif %}
-
 			</div>
 
-			<div class="cleaner"></div>
+			<div class="footer">
+				Copyright © 2014. Tous droits réservés.<br />
+				Toute reproduction partielle ou totale de ce site est vivement conseillée avec ou sans l'accord écrit de l'éditeur (ou pas). 
+			</div>
 		</div>
 	</body>
 </html>
