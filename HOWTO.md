@@ -64,3 +64,25 @@ You can insert a picture, a video or whatever you want in the body of you file. 
 To use local storage
   * put your media on **media** subdirectory in the data dir (this directory will be copied in the out dir)
   * in the content, prefix your image name by **{{media_url}}** (for example, il your image is called **fubar.jpg**, the path will be **{{media_url}}/fubar.jpg**)
+
+#### Syntax highlighting
+
+You can paste code in your post. To do this, you have 2 solutions :
+
+  * use the ` ``` ``` ` syntaxe
+  * add 4 spaces or 1 tab before each code line
+
+To add syntax highlighting the to code block, you have to use ` ``` ``` ` syntax and write the language name after the first ` ``` `.  
+For example :
+
+```
+```python
+print("\_o< KOIN")
+```
+```
+
+will produce :
+
+```python
+print("\_o< KOIN")
+```
