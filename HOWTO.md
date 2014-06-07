@@ -69,17 +69,15 @@ To use local storage
 
 You can paste code in your post. To do this, you have 2 solutions :
 
-  * use the ` ``` ``` ` syntaxe
+  * use the <code>``` ```</code> syntaxe
   * add 4 spaces or 1 tab before each code line
 
-To add syntax highlighting the to code block, you have to use ` ``` ``` ` syntax and write the language name after the first ` ``` `.  
+To add syntax highlighting the to code block, you have to use <code>``` ```</code> syntax and write the language name after the first ` ``` `.  
 For example :
 
-```
-```python
-print("\_o< KOIN")
-```
-```
+    ```python
+    print("\_o< KOIN")
+    ```
 
 will produce :
 
