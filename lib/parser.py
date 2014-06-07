@@ -85,10 +85,16 @@ class Parser:
 		if not self.parser == 'plain': # We need to parse the content
 			if self.parser == 'mdown':
 				try:
+					extras = ['fenced-code-blocks']
+
 					from markdown2 import markdown
-					self.args['content'] = markdown(self.args['content'])
+					self.args['content'] = markdown(
+						self.args['content'],
+						extras=extras
+					)
 					self.args['small_content'] = markdown(
-						self.args['small_content']
+						self.args['small_content'],
+						extras=extras
 					)
 				except ImportError as e:
 					logging.warning("PARSER Markdown library does not exist")
