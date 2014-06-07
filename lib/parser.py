@@ -7,6 +7,7 @@ import logging
 import time
 
 from lib.wrap import wrap
+import settings
 
 ALLOWED_PARSER = ['mdown', 'plain']
 
@@ -18,10 +19,23 @@ class Parser:
 		self.file = file
 		self.args = {}
 
+	"""
+	Parse text to replace content vars with settings parameter
+	"""
+	def add_settings_vars(self, text):
+		vars = {
+			'media_url': settings.WEBSITE_MEDIA_URL
+		}
+
+		for k, v in vars.items():
+			text = text.replace('{{%s}}' % (k), v)
+
+		return text
+
+	"""
+	Parse a file
+	"""
 	def parse(self):
-		"""
-		Parse a file
-		"""
 		if not os.path.exists(self.file):
 			raise IOError("File %s does not exist" % (self.file))
 
@@ -63,6 +77,8 @@ class Parser:
 					in_body = True
 			else:
 				self.args['content'] += line
+
+		self.args['content'] = self.add_settings_vars(self.args['content'])
 
 		self.args['small_content'] = wrap(content=self.args['content'])
 

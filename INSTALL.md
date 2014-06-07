@@ -28,6 +28,6 @@ $ cp settings.sample.py settings.py
 $ vi settings.py
 ```
 
-**settings.py** file is has a lot of comments so you can edit it easily.
+**settings.py** file has a lot of comments so you can edit it easily.
 
 If you want to use markdown in most of your posts, the best solution is to set **PARSER** to **mdown** in the settings.py file.

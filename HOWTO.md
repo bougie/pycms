@@ -54,3 +54,13 @@ linkN
 ```
 
 Like blog post, the header line **parser** is not required.
+
+### Common components
+
+#### Media
+
+You can insert a picture, a video or whatever you want in the body of you file. For this, use the syntaxe allowed by your parser.
+
+To use local storage
+  * put your media on **media** subdirectory in the data dir (this directory will be copied in the out dir)
+  * in the content, prefix your image name by **{{media_url}}** (for example, il your image is called **fubar.jpg**, the path will be **{{media_url}}/fubar.jpg**)

@@ -17,7 +17,7 @@ logging.basicConfig(
 
 from lib.post import PostsManager
 from lib.function import save_tpl
-from lib.static import move_static_files
+from lib.static import move_files
 from lib.link import Link
 from lib.tag import TagManager
 from lib.rss import RSS
@@ -70,7 +70,8 @@ def main():
 		'page_keywords': settings.WEBSITE_KEYWORDS,
 		'page_description': settings.WEBSITE_DESCRIPTION,
 		'links': links.get(),
-		'tags': ''
+		'tags': '',
+		'media_url': 'media'
 	}
 
 	#
@@ -162,9 +163,17 @@ def main():
 	#
 	# Move static file (css, js, img, ...) from the template dir to the output dir
 	#
-	move_static_files(
-		static_dir = os.path.join(theme_dir, 'static'),
+	move_files(
+		input_dir = os.path.join(theme_dir, 'static'),
 		output_dir = os.path.join(settings.OUT_DIR, 'static')
+	)
+
+	#
+	# Move data files from the subdir in data dir to the output dir
+	#
+	move_files(
+		input_dir = os.path.join(settings.DATA_DIR, 'media'),
+		output_dir = os.path.join(settings.OUT_DIR, 'media')
 	)
 
 if __name__ == "__main__":
