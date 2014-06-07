@@ -9,6 +9,7 @@
 		<meta name="description" content="{{page_description}}" />
 
 		<link rel="stylesheet" href="{{base_url}}/static/css/style.css" />
+		<link rel="stylesheet" href="{{base_url}}/static/css/pygments.css" />
 
 		{% if activate_rss %}
 			<link rel="alternate" type="application/rss+xml" title="RSS" href="{{rss}}" />

@@ -91,6 +91,15 @@ a:hover { text-decoration: underline; }
 	margin-top: 3px;
 }
 
+.codehilite
+{
+	background-color: #333333;
+	padding: 15px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	margin-left: 50px;
+}
+
 .footer
 {
 	clear: both;
