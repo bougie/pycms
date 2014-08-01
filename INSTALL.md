@@ -10,7 +10,7 @@ PyCMS need python >= 3.3 to works. Jinja2 template library is also required :
 If you want to use markdown in your blog post, you need to install the mardown extension for python :
 
 ```
-# pip install mardown2
+# pip install markdown2
 ```
 
 If you want to use the syntax highlighting in your code, install pygments :
