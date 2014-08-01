@@ -19,6 +19,12 @@ If you want to use the syntax highlighting in your code, install pygments :
 # pip install pygments
 ```
 
+If you want to generate a RSS feed :
+
+```
+# pip install PyRSS2Gen
+```
+
 Now, clone the pycms source repository into a location of your webserver directory tree :
 
 ```
