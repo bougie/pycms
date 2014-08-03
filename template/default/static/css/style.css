@@ -91,6 +91,11 @@ a:hover { text-decoration: underline; }
 	margin-top: 3px;
 }
 
+pre
+{
+	width: 100%;
+	overflow-x: auto;
+}
 .codehilite
 {
 	background-color: #333333;
