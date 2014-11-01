@@ -1,5 +1,3 @@
-#-*- coding: utf8 -*-
-
 # Title of the website (use in <title> and <h1>
 WEBSITE_TITLE = ""
 
